@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,29 +24,50 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    <!-- Styles -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </button>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <i class="fas fa-arrow-right"></i>
-                <span>LLM2Docs</span>
+                <div class="brand-icon">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <span class="brand-text">LLM2Docs</span>
             </div>
             <div class="nav-menu" id="nav-menu">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#quick-start" class="nav-link">Quick Start</a>
-                <a href="#documentation" class="nav-link">Documentation</a>
-                <a href="#examples" class="nav-link">Examples</a>
-                <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="nav-link" target="_blank">
-                    <i class="fab fa-github"></i> GitHub
+                <a href="#features" class="nav-link">
+                    <i class="fas fa-star"></i>
+                    <span>Features</span>
+                </a>
+                <a href="#quick-start" class="nav-link">
+                    <i class="fas fa-rocket"></i>
+                    <span>Quick Start</span>
+                </a>
+                <a href="#examples" class="nav-link">
+                    <i class="fas fa-code"></i>
+                    <span>Examples</span>
+                </a>
+                <a href="#documentation" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    <span>Docs</span>
+                </a>
+                <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="nav-link github-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
                 </a>
             </div>
             <div class="nav-toggle" id="nav-toggle">
@@ -59,56 +80,102 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-background">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+            </div>
+        </div>
         <div class="hero-container">
             <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-bolt"></i>
+                    <span>Unofficial MCP Server</span>
+                </div>
                 <h1 class="hero-title">
                     <span class="gradient-text">LLM2Docs</span>
-                    <br>Unofficial MCP Bridge for Google Docs
+                    <br>
+                    <span class="hero-subtitle">AI-Powered Google Docs Integration</span>
                 </h1>
                 <p class="hero-description">
-                    An unofficial Model Context Protocol server that lets large language models securely access, 
-                    read, and interact with your Google Docs. Enabling smarter workflows and AI-assisted editing 
-                    for technical documentation and content creation.
+                    Transform your document workflow with intelligent automation. 
+                    Let AI create, format, and manage your Google Docs with natural language commands.
                 </p>
-                <div class="hero-badges">
-                    <span class="badge">40+ Tools</span>
-                    <span class="badge">AI-Powered</span>
-                    <span class="badge">Professional</span>
-                    <span class="badge">Open Source</span>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">40+</span>
+                        <span class="stat-label">Tools</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Open Source</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">AI</span>
+                        <span class="stat-label">Powered</span>
+                    </div>
                 </div>
                 <div class="hero-actions">
                     <a href="#quick-start" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i> Get Started
+                        <i class="fas fa-rocket"></i>
+                        <span>Get Started</span>
+                        <div class="btn-shine"></div>
                     </a>
                     <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="btn btn-secondary" target="_blank">
-                        <i class="fab fa-github"></i> View on GitHub
+                        <i class="fab fa-github"></i>
+                        <span>View on GitHub</span>
                     </a>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="code-block">
-                    <div class="code-header">
-                        <div class="code-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
+                <div class="code-window">
+                    <div class="window-header">
+                        <div class="window-controls">
+                            <span class="control close"></span>
+                            <span class="control minimize"></span>
+                            <span class="control maximize"></span>
                         </div>
-                        <span class="code-title">Claude Desktop Integration</span>
+                        <div class="window-title">
+                            <i class="fas fa-terminal"></i>
+                            <span>Claude Desktop</span>
+                        </div>
                     </div>
-                    <div class="code-content">
-                        <pre><code># Create a technical document
-"Create a new Google Doc titled 'API Documentation' 
-with a table of contents and professional formatting"
-
-# Format content
-"Make the title bold, 24pt, and center-aligned"
-
-# Add structure
-"Create a bulleted list of features and 
-a numbered list of implementation steps"
-
-# Insert media
-"Add an image from this URL with a caption"</code></pre>
+                    <div class="window-content">
+                        <div class="terminal-line">
+                            <span class="prompt">$</span>
+                            <span class="command">Create a technical document</span>
+                        </div>
+                        <div class="terminal-output">
+                            <div class="output-line">
+                                <span class="success">✓</span>
+                                <span>Created "API Documentation"</span>
+                            </div>
+                            <div class="output-line">
+                                <span class="success">✓</span>
+                                <span>Added table of contents</span>
+                            </div>
+                            <div class="output-line">
+                                <span class="success">✓</span>
+                                <span>Applied professional formatting</span>
+                            </div>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="prompt">$</span>
+                            <span class="command">Format the title with Arial 24pt</span>
+                        </div>
+                        <div class="terminal-output">
+                            <div class="output-line">
+                                <span class="success">✓</span>
+                                <span>Font changed to Arial</span>
+                            </div>
+                            <div class="output-line">
+                                <span class="success">✓</span>
+                                <span>Size set to 24pt</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,13 +186,16 @@ a numbered list of implementation steps"
     <section id="features" class="features">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Powerful Features</h2>
+                <h2 class="section-title">
+                    <span class="title-highlight">Powerful Features</span>
+                    <br>for Professional Documents
+                </h2>
                 <p class="section-description">
-                    Comprehensive tools for professional document creation and management
+                    Comprehensive tools for creating, formatting, and managing Google Docs with AI assistance
                 </p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
@@ -134,14 +204,14 @@ a numbered list of implementation steps"
                         Create, read, search, and manage Google Docs with advanced metadata access
                     </p>
                     <ul class="feature-list">
-                        <li>Create documents with initial content</li>
-                        <li>Search across your Drive</li>
-                        <li>Access document metadata</li>
-                        <li>Batch operations</li>
+                        <li><i class="fas fa-check"></i> Create documents with initial content</li>
+                        <li><i class="fas fa-check"></i> Search across your Drive</li>
+                        <li><i class="fas fa-check"></i> Access document metadata</li>
+                        <li><i class="fas fa-check"></i> Batch operations</li>
                     </ul>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-icon">
                         <i class="fas fa-paint-brush"></i>
                     </div>
@@ -150,14 +220,14 @@ a numbered list of implementation steps"
                         Complete font management, text styling, and professional formatting
                     </p>
                     <ul class="feature-list">
-                        <li>Font family, size, weight, style</li>
-                        <li>Text case transformation</li>
-                        <li>Subscript and superscript</li>
-                        <li>Colors and alignment</li>
+                        <li><i class="fas fa-check"></i> Font family, size, weight, style</li>
+                        <li><i class="fas fa-check"></i> Text case transformation</li>
+                        <li><i class="fas fa-check"></i> Subscript and superscript</li>
+                        <li><i class="fas fa-check"></i> Colors and alignment</li>
                     </ul>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-icon">
                         <i class="fas fa-table"></i>
                     </div>
@@ -166,14 +236,14 @@ a numbered list of implementation steps"
                         Professional table management with borders, merging, and formatting
                     </p>
                     <ul class="feature-list">
-                        <li>Table formatting and borders</li>
-                        <li>Cell merging (horizontal/vertical)</li>
-                        <li>Row and column management</li>
-                        <li>Column width control</li>
+                        <li><i class="fas fa-check"></i> Table formatting and borders</li>
+                        <li><i class="fas fa-check"></i> Cell merging (horizontal/vertical)</li>
+                        <li><i class="fas fa-check"></i> Row and column management</li>
+                        <li><i class="fas fa-check"></i> Column width control</li>
                     </ul>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="feature-icon">
                         <i class="fas fa-image"></i>
                     </div>
@@ -182,14 +252,14 @@ a numbered list of implementation steps"
                         Insert, resize, and manage images with professional alignment
                     </p>
                     <ul class="feature-list">
-                        <li>Insert images from URLs</li>
-                        <li>Resize and align images</li>
-                        <li>Add image captions</li>
-                        <li>Insert drawings and shapes</li>
+                        <li><i class="fas fa-check"></i> Insert images from URLs</li>
+                        <li><i class="fas fa-check"></i> Resize and align images</li>
+                        <li><i class="fas fa-check"></i> Add image captions</li>
+                        <li><i class="fas fa-check"></i> Insert drawings and shapes</li>
                     </ul>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="feature-icon">
                         <i class="fas fa-sitemap"></i>
                     </div>
@@ -198,14 +268,14 @@ a numbered list of implementation steps"
                         Professional document organization with TOC, headers, and navigation
                     </p>
                     <ul class="feature-list">
-                        <li>Auto-generated table of contents</li>
-                        <li>Headers and footers</li>
-                        <li>Bookmarks and cross-references</li>
-                        <li>Section breaks and footnotes</li>
+                        <li><i class="fas fa-check"></i> Auto-generated table of contents</li>
+                        <li><i class="fas fa-check"></i> Headers and footers</li>
+                        <li><i class="fas fa-check"></i> Bookmarks and cross-references</li>
+                        <li><i class="fas fa-check"></i> Section breaks and footnotes</li>
                     </ul>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="feature-icon">
                         <i class="fas fa-search"></i>
                     </div>
@@ -214,10 +284,10 @@ a numbered list of implementation steps"
                         Advanced search capabilities and content management tools
                     </p>
                     <ul class="feature-list">
-                        <li>Find and replace with case sensitivity</li>
-                        <li>Document search with context</li>
-                        <li>Word count and statistics</li>
-                        <li>Spell check and suggestions</li>
+                        <li><i class="fas fa-check"></i> Find and replace with case sensitivity</li>
+                        <li><i class="fas fa-check"></i> Document search with context</li>
+                        <li><i class="fas fa-check"></i> Word count and statistics</li>
+                        <li><i class="fas fa-check"></i> Spell check and suggestions</li>
                     </ul>
                 </div>
             </div>
@@ -228,52 +298,76 @@ a numbered list of implementation steps"
     <section id="quick-start" class="quick-start">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Quick Start Guide</h2>
+                <h2 class="section-title">
+                    <span class="title-highlight">Quick Start</span>
+                    <br>Get Running in Minutes
+                </h2>
                 <p class="section-description">
-                    Get up and running with DocsForge MCP in minutes
+                    Simple setup process to get LLM2Docs working with Claude Desktop
                 </p>
             </div>
             <div class="quick-start-content">
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
+                <div class="steps-container">
+                    <div class="step" data-aos="fade-right" data-aos-delay="100">
+                        <div class="step-number">
+                            <span>1</span>
+                        </div>
                         <div class="step-content">
                             <h3>Install Dependencies</h3>
                             <p>Clone the repository and install required packages</p>
-                            <div class="code-snippet">
-                                <pre><code>git clone https://github.com/NoManNayeem/docsforge-mcp.git
-cd docsforge-mcp
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-title">Terminal</span>
+                                    <button class="copy-btn" onclick="copyCode('step1-code')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <pre><code id="step1-code">git clone https://github.com/NoManNayeem/google-docs-mcp-server.git
+cd google-docs-mcp-server
 npm install</code></pre>
                             </div>
                         </div>
                     </div>
 
-                    <div class="step">
-                        <div class="step-number">2</div>
+                    <div class="step" data-aos="fade-left" data-aos-delay="200">
+                        <div class="step-number">
+                            <span>2</span>
+                        </div>
                         <div class="step-content">
                             <h3>Set Up Google Cloud</h3>
                             <p>Enable APIs and download credentials</p>
-                            <div class="code-snippet">
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-title">Google Cloud Console</span>
+                                </div>
                                 <pre><code># Enable Google Docs API and Google Drive API
 # Download credentials.json to project root</code></pre>
                             </div>
                         </div>
                     </div>
 
-                    <div class="step">
-                        <div class="step-number">3</div>
+                    <div class="step" data-aos="fade-right" data-aos-delay="300">
+                        <div class="step-number">
+                            <span>3</span>
+                        </div>
                         <div class="step-content">
                             <h3>Build and Configure</h3>
                             <p>Build the project and configure Claude Desktop</p>
-                            <div class="code-snippet">
-                                <pre><code>npm run build
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-title">Configuration</span>
+                                    <button class="copy-btn" onclick="copyCode('step3-code')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <pre><code id="step3-code">npm run build
 
 # Add to claude_desktop_config.json:
 {
   "mcpServers": {
-    "docsforge": {
+    "llm2docs": {
       "command": "node",
-      "args": ["/path/to/docsforge-mcp/build/index.js"]
+      "args": ["/path/to/google-docs-mcp-server/build/index.js"]
     }
   }
 }</code></pre>
@@ -281,12 +375,17 @@ npm install</code></pre>
                         </div>
                     </div>
 
-                    <div class="step">
-                        <div class="step-number">4</div>
+                    <div class="step" data-aos="fade-left" data-aos-delay="400">
+                        <div class="step-number">
+                            <span>4</span>
+                        </div>
                         <div class="step-content">
                             <h3>Start Using</h3>
                             <p>Restart Claude Desktop and begin creating documents</p>
-                            <div class="code-snippet">
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-title">Claude Desktop</span>
+                                </div>
                                 <pre><code>"Create a new Google Doc with a title and some content"</code></pre>
                             </div>
                         </div>
@@ -300,20 +399,28 @@ npm install</code></pre>
     <section id="examples" class="examples">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Usage Examples</h2>
+                <h2 class="section-title">
+                    <span class="title-highlight">Real Examples</span>
+                    <br>See LLM2Docs in Action
+                </h2>
                 <p class="section-description">
-                    See DocsForge MCP in action with real-world examples
+                    Practical examples of how LLM2Docs transforms your document workflow
                 </p>
             </div>
             <div class="examples-grid">
-                <div class="example-card">
+                <div class="example-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="example-header">
-                        <i class="fas fa-code"></i>
+                        <div class="example-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
                         <h3>Technical Documentation</h3>
                     </div>
                     <div class="example-content">
                         <p>Create comprehensive API documentation with proper formatting</p>
                         <div class="example-code">
+                            <div class="code-header">
+                                <span class="code-title">Claude Desktop</span>
+                            </div>
                             <pre><code>"Create a new document titled 'API Documentation' 
 with a table of contents"
 
@@ -325,14 +432,19 @@ link to it from the overview"</code></pre>
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="example-header">
-                        <i class="fas fa-newspaper"></i>
+                        <div class="example-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
                         <h3>Content Creation</h3>
                     </div>
                     <div class="example-content">
                         <p>Professional content with advanced formatting</p>
                         <div class="example-code">
+                            <div class="code-header">
+                                <span class="code-title">Claude Desktop</span>
+                            </div>
                             <pre><code>"Make the title bold, 24pt, and center-aligned"
 
 "Create a bulleted list of features and 
@@ -343,14 +455,19 @@ a numbered list of steps"
                     </div>
                 </div>
 
-                <div class="example-card">
+                <div class="example-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="example-header">
-                        <i class="fas fa-cogs"></i>
+                        <div class="example-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
                         <h3>Document Management</h3>
                     </div>
                     <div class="example-content">
                         <p>Efficient document organization and management</p>
                         <div class="example-code">
+                            <div class="code-header">
+                                <span class="code-title">Claude Desktop</span>
+                            </div>
                             <pre><code>"Find all documents containing 'project' in the title"
 
 "Replace all instances of 'old-version' with 'new-version'"
@@ -367,35 +484,58 @@ a numbered list of steps"
     <section id="documentation" class="documentation">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Complete Documentation</h2>
+                <h2 class="section-title">
+                    <span class="title-highlight">Complete Documentation</span>
+                    <br>Everything You Need to Know
+                </h2>
                 <p class="section-description">
-                    Comprehensive guides and API reference
+                    Comprehensive guides, API reference, and community resources
                 </p>
             </div>
             <div class="docs-grid">
-                <div class="doc-card">
-                    <i class="fas fa-book"></i>
+                <div class="doc-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="doc-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
                     <h3>API Reference</h3>
                     <p>Complete reference for all 40+ tools and their parameters</p>
-                    <a href="#" class="doc-link">View API Docs <i class="fas fa-arrow-right"></i></a>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/README.md" class="doc-link" target="_blank">
+                        <span>View API Docs</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
-                <div class="doc-card">
-                    <i class="fas fa-play"></i>
+                <div class="doc-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="doc-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
                     <h3>Tutorials</h3>
                     <p>Step-by-step guides for common use cases and workflows</p>
-                    <a href="#" class="doc-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/README.md" class="doc-link" target="_blank">
+                        <span>Start Learning</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
-                <div class="doc-card">
-                    <i class="fas fa-question-circle"></i>
+                <div class="doc-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="doc-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
                     <h3>FAQ</h3>
                     <p>Frequently asked questions and troubleshooting guides</p>
-                    <a href="#" class="doc-link">Get Help <i class="fas fa-arrow-right"></i></a>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/issues" class="doc-link" target="_blank">
+                        <span>Get Help</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
-                <div class="doc-card">
-                    <i class="fas fa-users"></i>
+                <div class="doc-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="doc-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
                     <h3>Community</h3>
                     <p>Join our community for support, discussions, and contributions</p>
-                    <a href="https://github.com/NoManNayeem/docsforge-mcp/discussions" class="doc-link" target="_blank">Join Community <i class="fas fa-arrow-right"></i></a>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/discussions" class="doc-link" target="_blank">
+                        <span>Join Community</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -413,6 +553,14 @@ a numbered list of steps"
                     <p class="footer-description">
                         Unofficial MCP bridge between LLMs and Google Docs. Built by the community, for the community.
                     </p>
+                    <div class="footer-social">
+                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="footer-links">
                     <div class="footer-column">
@@ -440,21 +588,14 @@ a numbered list of steps"
             </div>
             <div class="footer-bottom">
                 <div class="footer-copyright">
-                    <p>&copy; 2024 LLM2Docs. Made with ❤️ for the AI and documentation community.</p>
-                </div>
-                <div class="footer-social">
-                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://twitter.com" target="_blank" class="social-link">
-                        <i class="fab fa-twitter"></i>
-                    </a>
+                    <p>&copy; 2024 LLM2Docs. Made with love for the AI and documentation community.</p>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

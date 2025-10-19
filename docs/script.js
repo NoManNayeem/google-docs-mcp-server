@@ -1,331 +1,462 @@
-// Mobile Navigation Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-        });
+// DOM Elements
+const themeToggle = document.getElementById('theme-toggle');
+const html = document.documentElement;
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
 
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            });
-        });
+// Theme Management
+class ThemeManager {
+  constructor() {
+    this.currentTheme = localStorage.getItem('theme') || 'dark';
+    this.init();
+  }
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!navToggle.contains(event.target) && !navMenu.contains(event.target)) {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            }
-        });
+  init() {
+    this.setTheme(this.currentTheme);
+    this.bindEvents();
+  }
+
+  setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    this.currentTheme = theme;
+    localStorage.setItem('theme', theme);
+    this.updateThemeToggle();
+  }
+
+  toggleTheme() {
+    const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+    this.setTheme(newTheme);
+  }
+
+  updateThemeToggle() {
+    if (themeToggle) {
+      const icon = themeToggle.querySelector('i');
+      if (this.currentTheme === 'dark') {
+        icon.className = 'fas fa-sun';
+      } else {
+        icon.className = 'fas fa-moon';
+      }
     }
-});
+  }
 
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offsetTop = target.offsetTop - 80; // Account for fixed navbar
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
+  bindEvents() {
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => this.toggleTheme());
+    }
+  }
+}
+
+// Navigation Management
+class NavigationManager {
+  constructor() {
+    this.isMenuOpen = false;
+    this.init();
+  }
+
+  init() {
+    this.bindEvents();
+    this.handleScroll();
+  }
+
+  bindEvents() {
+    if (navToggle) {
+      navToggle.addEventListener('click', () => this.toggleMenu());
+    }
+
+    // Close menu when clicking on links
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => this.closeMenu());
     });
-});
 
-// Navbar background on scroll
-window.addEventListener('scroll', function() {
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        this.closeMenu();
+      }
+    });
+
+    // Handle scroll for navbar
+    window.addEventListener('scroll', () => this.handleScroll());
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    navMenu.classList.toggle('active', this.isMenuOpen);
+    navToggle.classList.toggle('active', this.isMenuOpen);
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+    navMenu.classList.remove('active');
+    navToggle.classList.remove('active');
+  }
+
+  handleScroll() {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 4px 6px -1px rgb(0 0 0 / 0.1)';
+    if (window.scrollY > 100) {
+      navbar.classList.add('scrolled');
     } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
+      navbar.classList.remove('scrolled');
     }
-});
+  }
+}
 
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+// Animation Manager
+class AnimationManager {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.initAOS();
+    this.bindScrollAnimations();
+    this.initParallax();
+  }
+
+  initAOS() {
+    // Initialize AOS (Animate On Scroll) if available
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+      });
+    }
+  }
+
+  bindScrollAnimations() {
+    // Custom scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements for animation
+    const animateElements = document.querySelectorAll('.feature-card, .example-card, .doc-card, .step');
+    animateElements.forEach(el => observer.observe(el));
+  }
+
+  initParallax() {
+    // Parallax effect for floating shapes
+    const shapes = document.querySelectorAll('.shape');
+    
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.5;
+      
+      shapes.forEach((shape, index) => {
+        const speed = 0.1 + (index * 0.05);
+        shape.style.transform = `translateY(${rate * speed}px) rotate(${scrolled * 0.1}deg)`;
+      });
+    });
+  }
+}
+
+// Code Copy Functionality
+class CodeManager {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.bindCopyButtons();
+  }
+
+  bindCopyButtons() {
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const codeBlock = button.closest('.code-block');
+        const code = codeBlock.querySelector('code');
+        const text = code.textContent;
+        
+        this.copyToClipboard(text);
+        this.showCopyFeedback(button);
+      });
+    });
+  }
+
+  async copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+    }
+  }
+
+  showCopyFeedback(button) {
+    const originalIcon = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check"></i>';
+    button.style.background = 'var(--accent-success)';
+    button.style.color = 'white';
+    
+    setTimeout(() => {
+      button.innerHTML = originalIcon;
+      button.style.background = '';
+      button.style.color = '';
+    }, 2000);
+  }
+}
+
+// Smooth Scrolling
+class SmoothScrollManager {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.bindSmoothScroll();
+  }
+
+  bindSmoothScroll() {
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
+}
+
+// Typing Animation
+class TypingAnimation {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.animateTerminalLines();
+  }
+
+  animateTerminalLines() {
+    const terminalLines = document.querySelectorAll('.terminal-line .command');
+    terminalLines.forEach((line, index) => {
+      const text = line.textContent;
+      line.textContent = '';
+      line.style.opacity = '0';
+      
+      setTimeout(() => {
+        this.typeText(line, text, 50);
+        line.style.opacity = '1';
+      }, index * 2000);
+    });
+  }
+
+  typeText(element, text, speed) {
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(timer);
+      }
+    }, speed);
+  }
+}
+
+// Performance Optimizer
+class PerformanceOptimizer {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.optimizeImages();
+    this.debounceScroll();
+  }
+
+  optimizeImages() {
+    // Lazy loading for images
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.remove('lazy');
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+  }
+
+  debounceScroll() {
+    let scrollTimer = null;
+    window.addEventListener('scroll', () => {
+      if (scrollTimer !== null) {
+        clearTimeout(scrollTimer);
+      }
+      scrollTimer = setTimeout(() => {
+        // Scroll-based optimizations
+        this.handleScrollOptimizations();
+      }, 10);
+    });
+  }
+
+  handleScrollOptimizations() {
+    // Optimize animations based on scroll position
+    const scrolled = window.pageYOffset;
+    const shapes = document.querySelectorAll('.shape');
+    
+    if (scrolled > 1000) {
+      shapes.forEach(shape => {
+        shape.style.animationPlayState = 'paused';
+      });
+    } else {
+      shapes.forEach(shape => {
+        shape.style.animationPlayState = 'running';
+      });
+    }
+  }
+}
+
+// Utility Functions
+const utils = {
+  // Throttle function for performance
+  throttle(func, limit) {
+    let inThrottle;
+    return function() {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  },
+
+  // Debounce function for performance
+  debounce(func, wait, immediate) {
+    let timeout;
+    return function() {
+      const context = this;
+      const args = arguments;
+      const later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      const callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  },
+
+  // Check if element is in viewport
+  isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  },
+
+  // Get random number between min and max
+  random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 };
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', function() {
-    const animatedElements = document.querySelectorAll('.feature-card, .example-card, .doc-card, .step');
-    animatedElements.forEach(el => {
-        observer.observe(el);
-    });
-});
-
-// Copy code snippets functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const codeBlocks = document.querySelectorAll('.code-snippet pre, .example-code pre, .code-content pre');
-    
-    codeBlocks.forEach(block => {
-        // Create copy button
-        const copyButton = document.createElement('button');
-        copyButton.innerHTML = '<i class="fas fa-copy"></i>';
-        copyButton.className = 'copy-button';
-        copyButton.style.cssText = `
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #94a3b8;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s ease;
-            opacity: 0;
-        `;
+// Global copy function for code blocks
+function copyCode(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    const text = element.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      // Show feedback
+      const button = element.closest('.code-block').querySelector('.copy-btn');
+      if (button) {
+        const originalIcon = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i>';
+        button.style.background = 'var(--accent-success)';
+        button.style.color = 'white';
         
-        // Make code block container relative
-        const container = block.parentElement;
-        container.style.position = 'relative';
-        container.appendChild(copyButton);
-        
-        // Show/hide copy button on hover
-        container.addEventListener('mouseenter', () => {
-            copyButton.style.opacity = '1';
-        });
-        
-        container.addEventListener('mouseleave', () => {
-            copyButton.style.opacity = '0';
-        });
-        
-        // Copy functionality
-        copyButton.addEventListener('click', async () => {
-            const text = block.textContent;
-            try {
-                await navigator.clipboard.writeText(text);
-                copyButton.innerHTML = '<i class="fas fa-check"></i>';
-                copyButton.style.color = '#10b981';
-                setTimeout(() => {
-                    copyButton.innerHTML = '<i class="fas fa-copy"></i>';
-                    copyButton.style.color = '#94a3b8';
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy text: ', err);
-            }
-        });
+        setTimeout(() => {
+          button.innerHTML = originalIcon;
+          button.style.background = '';
+          button.style.color = '';
+        }, 2000);
+      }
     });
-});
-
-// Typing animation for hero title
-document.addEventListener('DOMContentLoaded', function() {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const text = heroTitle.textContent;
-        heroTitle.textContent = '';
-        heroTitle.style.borderRight = '2px solid #2563eb';
-        
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroTitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            } else {
-                heroTitle.style.borderRight = 'none';
-            }
-        };
-        
-        // Start typing animation after a short delay
-        setTimeout(typeWriter, 500);
-    }
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        const rate = scrolled * -0.5;
-        hero.style.transform = `translateY(${rate}px)`;
-    }
-});
-
-// Feature cards hover effect
-document.addEventListener('DOMContentLoaded', function() {
-    const featureCards = document.querySelectorAll('.feature-card');
-    
-    featureCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-});
-
-// Badge animation
-document.addEventListener('DOMContentLoaded', function() {
-    const badges = document.querySelectorAll('.badge');
-    
-    badges.forEach((badge, index) => {
-        badge.style.animationDelay = `${index * 0.1}s`;
-        badge.style.animation = 'fadeInUp 0.6s ease-out forwards';
-    });
-});
-
-// Button click effects
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.btn');
-    
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            // Create ripple effect
-            const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                left: ${x}px;
-                top: ${y}px;
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                pointer-events: none;
-            `;
-            
-            this.style.position = 'relative';
-            this.style.overflow = 'hidden';
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-});
-
-// Add ripple animation CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Lazy loading for images (if any are added later)
-document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-});
-
-// Search functionality (if search is implemented)
-function searchContent(query) {
-    const searchableElements = document.querySelectorAll('.feature-card, .example-card, .doc-card');
-    const results = [];
-    
-    searchableElements.forEach(element => {
-        const text = element.textContent.toLowerCase();
-        if (text.includes(query.toLowerCase())) {
-            results.push(element);
-        }
-    });
-    
-    return results;
+  }
 }
 
-// Keyboard navigation
-document.addEventListener('keydown', function(e) {
-    // ESC key closes mobile menu
-    if (e.key === 'Escape') {
-        const navMenu = document.getElementById('nav-menu');
-        const navToggle = document.getElementById('nav-toggle');
-        if (navMenu && navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-            navToggle.classList.remove('active');
-        }
-    }
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize all managers
+  new ThemeManager();
+  new NavigationManager();
+  new AnimationManager();
+  new CodeManager();
+  new SmoothScrollManager();
+  new TypingAnimation();
+  new PerformanceOptimizer();
+
+  // Add loading animation
+  document.body.classList.add('loaded');
+
+  // Initialize any additional features
+  console.log('LLM2Docs website initialized successfully!');
 });
 
-// Performance optimization: Debounce scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Apply debouncing to scroll events
-const debouncedScrollHandler = debounce(function() {
-    // Scroll-based animations and effects
-}, 10);
-
-window.addEventListener('scroll', debouncedScrollHandler);
-
-// Console welcome message
-console.log(`
-🚀 DocsForge MCP - Comprehensive Google Docs Automation
-📚 Documentation: https://nomanayeem.github.io/docsforge-mcp
-🐛 Issues: https://github.com/NoManNayeem/docsforge-mcp/issues
-💡 Discussions: https://github.com/NoManNayeem/docsforge-mcp/discussions
-
-Made with ❤️ for the AI and documentation community
-`);
-
-// Service Worker registration (for PWA features if needed)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                console.log('ServiceWorker registration successful');
-            })
-            .catch(function(err) {
-                console.log('ServiceWorker registration failed');
-            });
+// Handle page visibility changes
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    // Pause animations when page is not visible
+    document.querySelectorAll('.shape').forEach(shape => {
+      shape.style.animationPlayState = 'paused';
     });
-}
+  } else {
+    // Resume animations when page becomes visible
+    document.querySelectorAll('.shape').forEach(shape => {
+      shape.style.animationPlayState = 'running';
+    });
+  }
+});
+
+// Handle window resize
+window.addEventListener('resize', utils.debounce(() => {
+  // Recalculate animations on resize
+  if (typeof AOS !== 'undefined') {
+    AOS.refresh();
+  }
+}, 250));
+
+// Export for potential external use
+window.LLM2Docs = {
+  utils,
+  copyCode
+};
