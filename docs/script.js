@@ -5,7 +5,9 @@
 // Theme Management
 class ThemeManager {
   constructor() {
-    this.theme = localStorage.getItem('theme') || 'dark';
+    // Default to dark theme unless user has explicitly set a preference
+    const savedTheme = localStorage.getItem('theme');
+    this.theme = savedTheme !== null ? savedTheme : 'dark';
     this.init();
   }
 
@@ -330,7 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Mermaid diagrams
   if (typeof mermaid !== 'undefined') {
-    const theme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('theme');
+    const theme = savedTheme !== null ? savedTheme : 'dark';
     mermaid.initialize({
       startOnLoad: true,
       theme: theme === 'dark' ? 'dark' : 'default',
