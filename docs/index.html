@@ -24,51 +24,56 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- React Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-icons@4.12.0/font/react-icons.css">
+    
+    <!-- Lucide Icons for better performance -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Mermaid for Diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="theme-toggle">
-        <i class="fas fa-sun"></i>
-        <i class="fas fa-moon"></i>
-    </button>
-
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
                 <div class="brand-icon">
-                    <i class="fas fa-arrow-right"></i>
+                    <i data-lucide="arrow-right"></i>
                 </div>
                 <span class="brand-text">LLM2Docs</span>
             </div>
             <div class="nav-menu" id="nav-menu">
                 <a href="#features" class="nav-link">
-                    <i class="fas fa-star"></i>
+                    <i data-lucide="star"></i>
                     <span>Features</span>
                 </a>
                 <a href="#quick-start" class="nav-link">
-                    <i class="fas fa-rocket"></i>
+                    <i data-lucide="rocket"></i>
                     <span>Quick Start</span>
                 </a>
                 <a href="#examples" class="nav-link">
-                    <i class="fas fa-code"></i>
+                    <i data-lucide="code"></i>
                     <span>Examples</span>
                 </a>
                 <a href="#documentation" class="nav-link">
-                    <i class="fas fa-book"></i>
+                    <i data-lucide="book"></i>
                     <span>Docs</span>
                 </a>
                 <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="nav-link github-link" target="_blank">
-                    <i class="fab fa-github"></i>
+                    <i data-lucide="github"></i>
                     <span>GitHub</span>
                 </a>
+                <!-- Theme Toggle in Navbar -->
+                <button class="theme-toggle" id="theme-toggle">
+                    <i data-lucide="sun" style="color: black;"></i>
+                    <i data-lucide="moon"></i>
+                </button>
             </div>
             <div class="nav-toggle" id="nav-toggle">
                 <span class="bar"></span>
@@ -89,10 +94,10 @@
                 <div class="shape shape-5"></div>
             </div>
         </div>
-        <div class="hero-container">
+        <div class="hero-container" style="margin-top: 140px;">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i class="fas fa-bolt"></i>
+                    <i data-lucide="zap"></i>
                     <span>Unofficial MCP Server</span>
                 </div>
                 <h1 class="hero-title">
@@ -118,16 +123,24 @@
                         <span class="stat-label">Powered</span>
                     </div>
                 </div>
-                <div class="hero-actions">
-                    <a href="#quick-start" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i>
+                <div class="hero-actions" style="margin-bottom: 140px; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="#quick-start" class="btn btn-primary" style="display: flex; align-items: center; gap: 0.5em;">
+                        <i data-lucide="rocket"></i>
                         <span>Get Started</span>
                         <div class="btn-shine"></div>
                     </a>
-                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="btn btn-secondary" target="_blank">
-                        <i class="fab fa-github"></i>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server"
+                        class="btn btn-secondary" target="_blank" rel="noopener"
+                        style="display: flex; align-items: center; gap: 0.5em;">
+                        <i data-lucide="github"></i>
                         <span>View on GitHub</span>
                     </a>
+                    <button class="btn btn-tertiary github-star-btn" type="button" id="github-star-btn"
+                        style="display: flex; align-items: center; gap: 0.5em;" aria-label="Star this repo" title="Star on GitHub">
+                        <i data-lucide="star"></i>
+                        <span>Star</span>
+                        <span class="star-count" id="star-count">0</span>
+                    </button>
                 </div>
             </div>
             <div class="hero-visual">
@@ -139,7 +152,7 @@
                             <span class="control maximize"></span>
                         </div>
                         <div class="window-title">
-                            <i class="fas fa-terminal"></i>
+                            <i data-lucide="terminal"></i>
                             <span>Claude Desktop</span>
                         </div>
                     </div>
@@ -197,97 +210,97 @@
             <div class="features-grid">
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-icon">
-                        <i class="fas fa-file-alt"></i>
+                        <i data-lucide="file-text"></i>
                     </div>
                     <h3 class="feature-title">Document Management</h3>
                     <p class="feature-description">
                         Create, read, search, and manage Google Docs with advanced metadata access
                     </p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Create documents with initial content</li>
-                        <li><i class="fas fa-check"></i> Search across your Drive</li>
-                        <li><i class="fas fa-check"></i> Access document metadata</li>
-                        <li><i class="fas fa-check"></i> Batch operations</li>
+                        <li><i data-lucide="check"></i> Create documents with initial content</li>
+                        <li><i data-lucide="check"></i> Search across your Drive</li>
+                        <li><i data-lucide="check"></i> Access document metadata</li>
+                        <li><i data-lucide="check"></i> Batch operations</li>
                     </ul>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-icon">
-                        <i class="fas fa-paint-brush"></i>
+                        <i data-lucide="palette"></i>
                     </div>
                     <h3 class="feature-title">Advanced Formatting</h3>
                     <p class="feature-description">
                         Complete font management, text styling, and professional formatting
                     </p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Font family, size, weight, style</li>
-                        <li><i class="fas fa-check"></i> Text case transformation</li>
-                        <li><i class="fas fa-check"></i> Subscript and superscript</li>
-                        <li><i class="fas fa-check"></i> Colors and alignment</li>
+                        <li><i data-lucide="check"></i> Font family, size, weight, style</li>
+                        <li><i data-lucide="check"></i> Text case transformation</li>
+                        <li><i data-lucide="check"></i> Subscript and superscript</li>
+                        <li><i data-lucide="check"></i> Colors and alignment</li>
                     </ul>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-icon">
-                        <i class="fas fa-table"></i>
+                        <i data-lucide="table"></i>
                     </div>
                     <h3 class="feature-title">Advanced Tables</h3>
                     <p class="feature-description">
                         Professional table management with borders, merging, and formatting
                     </p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Table formatting and borders</li>
-                        <li><i class="fas fa-check"></i> Cell merging (horizontal/vertical)</li>
-                        <li><i class="fas fa-check"></i> Row and column management</li>
-                        <li><i class="fas fa-check"></i> Column width control</li>
+                        <li><i data-lucide="check"></i> Table formatting and borders</li>
+                        <li><i data-lucide="check"></i> Cell merging (horizontal/vertical)</li>
+                        <li><i data-lucide="check"></i> Row and column management</li>
+                        <li><i data-lucide="check"></i> Column width control</li>
                     </ul>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="feature-icon">
-                        <i class="fas fa-image"></i>
+                        <i data-lucide="image"></i>
                     </div>
                     <h3 class="feature-title">Media & Images</h3>
                     <p class="feature-description">
                         Insert, resize, and manage images with professional alignment
                     </p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Insert images from URLs</li>
-                        <li><i class="fas fa-check"></i> Resize and align images</li>
-                        <li><i class="fas fa-check"></i> Add image captions</li>
-                        <li><i class="fas fa-check"></i> Insert drawings and shapes</li>
+                        <li><i data-lucide="check"></i> Insert images from URLs</li>
+                        <li><i data-lucide="check"></i> Resize and align images</li>
+                        <li><i data-lucide="check"></i> Add image captions</li>
+                        <li><i data-lucide="check"></i> Insert drawings and shapes</li>
                     </ul>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="feature-icon">
-                        <i class="fas fa-sitemap"></i>
+                        <i data-lucide="layers"></i>
                     </div>
                     <h3 class="feature-title">Document Structure</h3>
                     <p class="feature-description">
                         Professional document organization with TOC, headers, and navigation
                     </p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Auto-generated table of contents</li>
-                        <li><i class="fas fa-check"></i> Headers and footers</li>
-                        <li><i class="fas fa-check"></i> Bookmarks and cross-references</li>
-                        <li><i class="fas fa-check"></i> Section breaks and footnotes</li>
+                        <li><i data-lucide="check"></i> Auto-generated table of contents</li>
+                        <li><i data-lucide="check"></i> Headers and footers</li>
+                        <li><i data-lucide="check"></i> Bookmarks and cross-references</li>
+                        <li><i data-lucide="check"></i> Section breaks and footnotes</li>
                     </ul>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="feature-icon">
-                        <i class="fas fa-search"></i>
+                        <i data-lucide="search"></i>
                     </div>
                     <h3 class="feature-title">Search & Content</h3>
                     <p class="feature-description">
                         Advanced search capabilities and content management tools
                     </p>
                     <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Find and replace with case sensitivity</li>
-                        <li><i class="fas fa-check"></i> Document search with context</li>
-                        <li><i class="fas fa-check"></i> Word count and statistics</li>
-                        <li><i class="fas fa-check"></i> Spell check and suggestions</li>
+                        <li><i data-lucide="check"></i> Find and replace with case sensitivity</li>
+                        <li><i data-lucide="check"></i> Document search with context</li>
+                        <li><i data-lucide="check"></i> Word count and statistics</li>
+                        <li><i data-lucide="check"></i> Spell check and suggestions</li>
                     </ul>
                 </div>
             </div>
@@ -319,7 +332,7 @@
                                 <div class="code-header">
                                     <span class="code-title">Terminal</span>
                                     <button class="copy-btn" onclick="copyCode('step1-code')">
-                                        <i class="fas fa-copy"></i>
+                                        <i data-lucide="copy"></i>
                                     </button>
                                 </div>
                                 <pre><code id="step1-code">git clone https://github.com/NoManNayeem/google-docs-mcp-server.git
@@ -357,7 +370,7 @@ npm install</code></pre>
                                 <div class="code-header">
                                     <span class="code-title">Configuration</span>
                                     <button class="copy-btn" onclick="copyCode('step3-code')">
-                                        <i class="fas fa-copy"></i>
+                                        <i data-lucide="copy"></i>
                                     </button>
                                 </div>
                                 <pre><code id="step3-code">npm run build
@@ -395,6 +408,210 @@ npm install</code></pre>
         </div>
     </section>
 
+    <!-- Live Demo Section -->
+    <section id="live-demo" class="live-demo">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-highlight">See LLM2Docs in Action</span>
+                    <br>Live AI Conversation Demo
+                </h2>
+                <p class="section-description">
+                    Watch how users interact with AI to create and format documents in real-time
+                </p>
+            </div>
+            <div class="demo-container">
+                <div class="chat-panel">
+                    <div class="chat-header">
+                        <div class="chat-avatar">
+                            <i data-lucide="user"></i>
+                        </div>
+                        <div class="chat-info">
+                            <h3>User</h3>
+                            <span class="status">Typing...</span>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message user-message">
+                            <div class="message-content">
+                                <p>Create a new Google Doc titled "Project Proposal" with a professional heading and bullet points for the key features.</p>
+                            </div>
+                            <div class="message-time">2:34 PM</div>
+                        </div>
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i data-lucide="bot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>I'll create a new Google Doc titled "Project Proposal" with professional formatting. Let me set up the document structure for you.</p>
+                                <div class="typing-indicator">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="message-time">2:34 PM</div>
+                        </div>
+                        <div class="message user-message">
+                            <div class="message-content">
+                                <p>Make the title bold, 24pt, and center-aligned. Then add a table of contents.</p>
+                            </div>
+                            <div class="message-time">2:35 PM</div>
+                        </div>
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i data-lucide="bot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Perfect! I've formatted the title with Arial 24pt, made it bold and center-aligned, and added a table of contents. The document is now ready for your content.</p>
+                            </div>
+                            <div class="message-time">2:35 PM</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Ask me to create or format your document..." disabled>
+                        <button class="send-btn" disabled>
+                            <i data-lucide="send"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="doc-preview">
+                    <div class="preview-header">
+                        <div class="preview-controls">
+                            <span class="control close"></span>
+                            <span class="control minimize"></span>
+                            <span class="control maximize"></span>
+                        </div>
+                        <div class="preview-title">
+                            <i data-lucide="file-text"></i>
+                            <span>Project Proposal - Google Docs</span>
+                        </div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="doc-title">
+                            <h1>Project Proposal</h1>
+                        </div>
+                        <div class="doc-toc">
+                            <h2>Table of Contents</h2>
+                            <ul>
+                                <li>Executive Summary</li>
+                                <li>Project Overview</li>
+                                <li>Key Features</li>
+                                <li>Implementation Plan</li>
+                                <li>Budget & Timeline</li>
+                            </ul>
+                        </div>
+                        <div class="doc-content">
+                            <h2>Executive Summary</h2>
+                            <p>This proposal outlines a comprehensive project plan for developing an innovative solution that addresses current market needs and provides significant value to stakeholders.</p>
+                            
+                            <h2>Key Features</h2>
+                            <ul>
+                                <li>Advanced AI Integration</li>
+                                <li>Real-time Collaboration</li>
+                                <li>Scalable Architecture</li>
+                                <li>User-friendly Interface</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Flow Diagrams Section -->
+    <section id="data-flow" class="data-flow">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-highlight">How LLM2Docs Works</span>
+                    <br>Interactive Data Flow Animations
+                </h2>
+                <p class="section-description">
+                    See how data flows between AI models, external tools, and Google Docs
+                </p>
+            </div>
+            <div class="flow-diagrams">
+                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Data Flow Diagram</h3>
+                    <div class="mermaid">
+                        graph TD
+                            A[🤖 AI Model] --> B[🔧 MCP Server]
+                            B --> C[📄 Google Docs]
+                            A --> D[💬 Claude Desktop]
+                            B --> E[🔍 Search & Tools]
+                            E --> C
+                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
+                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
+                            style C fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
+                            style D fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
+                            style E fill:#ef4444,stroke:#dc2626,stroke-width:3px,color:#fff
+                    </div>
+                </div>
+
+                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="500">
+                    <h3>Multi-Agent Collaboration</h3>
+                    <div class="mermaid">
+                        graph TD
+                            A[🤖 Agent 1] --> D[🌐 MCP Hub]
+                            B[🤖 Agent 2] --> D
+                            C[🤖 Agent 3] --> D
+                            D --> E[📊 Shared Context]
+                            D --> F[🔄 Task Coordination]
+                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
+                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
+                            style C fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
+                            style D fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
+                            style E fill:#ef4444,stroke:#dc2626,stroke-width:3px,color:#fff
+                            style F fill:#06b6d4,stroke:#0891b2,stroke-width:3px,color:#fff
+                    </div>
+                </div>
+
+                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Session Lifecycle</h3>
+                    <div class="mermaid">
+                        graph LR
+                            A[🚀 Start Session] --> B[🔗 Establish Connection]
+                            B --> C[🔄 Data Exchange]
+                            C --> D[🏁 End Session]
+                            style A fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
+                            style B fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
+                            style C fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
+                            style D fill:#ef4444,stroke:#dc2626,stroke-width:3px,color:#fff
+                    </div>
+                </div>
+
+                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="300">
+                    <h3>Tool Invocation Workflow</h3>
+                    <div class="mermaid">
+                        graph LR
+                            A[📤 AI sends request] --> B[⚙️ Tool processes]
+                            B --> C[📥 Response returned]
+                            C --> D[🔄 Context updated]
+                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
+                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
+                            style C fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
+                            style D fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
+                    </div>
+                </div>
+
+                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="400">
+                    <h3>Security & Access Control</h3>
+                    <div class="mermaid">
+                        graph LR
+                            A[🤝 Secure Handshake] --> B[🔒 Encryption]
+                            B --> C[🛡️ Access Control]
+                            C --> D[✅ Secure Interaction]
+                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
+                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
+                            style C fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
+                            style D fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Examples Section -->
     <section id="examples" class="examples">
         <div class="container">
@@ -411,7 +628,7 @@ npm install</code></pre>
                 <div class="example-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="example-header">
                         <div class="example-icon">
-                            <i class="fas fa-code"></i>
+                            <i data-lucide="code"></i>
                         </div>
                         <h3>Technical Documentation</h3>
                     </div>
@@ -435,7 +652,7 @@ link to it from the overview"</code></pre>
                 <div class="example-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="example-header">
                         <div class="example-icon">
-                            <i class="fas fa-newspaper"></i>
+                            <i data-lucide="edit"></i>
                         </div>
                         <h3>Content Creation</h3>
                     </div>
@@ -458,7 +675,7 @@ a numbered list of steps"
                 <div class="example-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="example-header">
                         <div class="example-icon">
-                            <i class="fas fa-cogs"></i>
+                            <i data-lucide="settings"></i>
                         </div>
                         <h3>Document Management</h3>
                     </div>
@@ -495,7 +712,7 @@ a numbered list of steps"
             <div class="docs-grid">
                 <div class="doc-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="doc-icon">
-                        <i class="fas fa-book"></i>
+                        <i data-lucide="book"></i>
                     </div>
                     <h3>API Reference</h3>
                     <p>Complete reference for all 40+ tools and their parameters</p>
@@ -506,7 +723,7 @@ a numbered list of steps"
                 </div>
                 <div class="doc-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="doc-icon">
-                        <i class="fas fa-play"></i>
+                        <i data-lucide="play"></i>
                     </div>
                     <h3>Tutorials</h3>
                     <p>Step-by-step guides for common use cases and workflows</p>
@@ -517,7 +734,7 @@ a numbered list of steps"
                 </div>
                 <div class="doc-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="doc-icon">
-                        <i class="fas fa-question-circle"></i>
+                        <i data-lucide="help-circle"></i>
                     </div>
                     <h3>FAQ</h3>
                     <p>Frequently asked questions and troubleshooting guides</p>
@@ -528,7 +745,7 @@ a numbered list of steps"
                 </div>
                 <div class="doc-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="doc-icon">
-                        <i class="fas fa-users"></i>
+                        <i data-lucide="users"></i>
                     </div>
                     <h3>Community</h3>
                     <p>Join our community for support, discussions, and contributions</p>
@@ -547,7 +764,7 @@ a numbered list of steps"
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <i class="fas fa-arrow-right"></i>
+                        <i data-lucide="arrow-right"></i>
                         <span>LLM2Docs</span>
                     </div>
                     <p class="footer-description">
@@ -555,10 +772,10 @@ a numbered list of steps"
                     </p>
                     <div class="footer-social">
                         <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank" class="social-link">
-                            <i class="fab fa-github"></i>
+                            <i data-lucide="github"></i>
                         </a>
                         <a href="https://twitter.com" target="_blank" class="social-link">
-                            <i class="fab fa-twitter"></i>
+                            <i data-lucide="twitter"></i>
                         </a>
                     </div>
                 </div>

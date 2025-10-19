@@ -1,9 +1,9 @@
-# GitHub Pages Configuration for DocsForge MCP
-title: DocsForge MCP
+# GitHub Pages Configuration for Google Docs MCP Server
+title: LLM2Docs - Google Docs MCP Server
 description: A powerful Model Context Protocol server for comprehensive Google Docs automation and technical documentation
 author: NoManNayeem
-url: https://nomanayeem.github.io/docsforge-mcp
-baseurl: /docsforge-mcp
+url: https://nomanayeem.github.io/google-docs-mcp-server
+baseurl: /google-docs-mcp-server
 
 # Build settings
 markdown: kramdown
@@ -13,32 +13,32 @@ theme: minima
 # Navigation
 navigation:
   - title: Features
-    url: /docsforge-mcp/#features
+    url: /google-docs-mcp-server/#features
   - title: Quick Start
-    url: /docsforge-mcp/#quick-start
+    url: /google-docs-mcp-server/#quick-start
   - title: Documentation
-    url: /docsforge-mcp/#documentation
+    url: /google-docs-mcp-server/#documentation
   - title: Examples
-    url: /docsforge-mcp/#examples
+    url: /google-docs-mcp-server/#examples
   - title: GitHub
-    url: https://github.com/NoManNayeem/docsforge-mcp
+    url: https://github.com/NoManNayeem/google-docs-mcp-server
 
 # Social links
 social:
   - name: GitHub
-    url: https://github.com/NoManNayeem/docsforge-mcp
+    url: https://github.com/NoManNayeem/google-docs-mcp-server
   - name: Issues
-    url: https://github.com/NoManNayeem/docsforge-mcp/issues
+    url: https://github.com/NoManNayeem/google-docs-mcp-server/issues
   - name: Discussions
-    url: https://github.com/NoManNayeem/docsforge-mcp/discussions
+    url: https://github.com/NoManNayeem/google-docs-mcp-server/discussions
 
 # SEO
 seo:
-  title: DocsForge MCP - Comprehensive Google Docs Automation
+  title: LLM2Docs - Google Docs MCP Server
   description: A powerful Model Context Protocol server for comprehensive Google Docs automation and technical documentation with Claude AI
   keywords: mcp, google-docs, automation, technical-documentation, claude, ai, model-context-protocol
   author: NoManNayeem
-  image: /docsforge-mcp/assets/og-image.png
+  image: /google-docs-mcp-server/assets/og-image.png
 
 # Analytics (if needed)
 # google_analytics: GA_MEASUREMENT_ID

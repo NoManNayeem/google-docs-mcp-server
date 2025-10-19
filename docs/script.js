@@ -30,11 +30,25 @@ class ThemeManager {
 
   updateThemeToggle() {
     if (themeToggle) {
-      const icon = themeToggle.querySelector('i');
-      if (this.currentTheme === 'dark') {
-        icon.className = 'fas fa-sun';
+      const sunIcon = themeToggle.querySelector('[data-lucide="sun"]');
+      const moonIcon = themeToggle.querySelector('[data-lucide="moon"]');
+      
+      if (sunIcon && moonIcon) {
+        if (this.currentTheme === 'dark') {
+          sunIcon.style.display = 'block';
+          moonIcon.style.display = 'none';
+        } else {
+          sunIcon.style.display = 'none';
+          moonIcon.style.display = 'block';
+        }
+        
+        // Re-initialize Lucide icons after theme change
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
       } else {
-        icon.className = 'fas fa-moon';
+        // Fallback: use text content
+        themeToggle.innerHTML = this.currentTheme === 'dark' ? '☀️' : '🌙';
       }
     }
   }
@@ -390,6 +404,179 @@ const utils = {
   }
 };
 
+// GitHub Star Functionality
+class GitHubStarManager {
+  constructor() {
+    this.starCount = 0;
+    this.init();
+  }
+
+  init() {
+    this.fetchStarCount();
+    this.bindEvents();
+  }
+
+  async fetchStarCount() {
+    try {
+      const response = await fetch('https://api.github.com/repos/NoManNayeem/google-docs-mcp-server');
+      const data = await response.json();
+      this.starCount = data.stargazers_count || 0;
+      this.updateStarCount();
+    } catch (error) {
+      console.log('Could not fetch star count:', error);
+      this.starCount = 0;
+    }
+  }
+
+  updateStarCount() {
+    const starCountElement = document.getElementById('star-count');
+    if (starCountElement) {
+      starCountElement.textContent = this.starCount;
+    }
+  }
+
+  bindEvents() {
+    const starButton = document.querySelector('.github-star-btn');
+    if (starButton) {
+      starButton.addEventListener('click', () => this.starRepository());
+    }
+  }
+
+  starRepository() {
+    // Open GitHub repository in new tab
+    window.open('https://github.com/NoManNayeem/google-docs-mcp-server', '_blank');
+    
+    // Animate the star button
+    const starButton = document.querySelector('.github-star-btn');
+    if (starButton) {
+      starButton.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        starButton.style.transform = 'scale(1)';
+      }, 200);
+    }
+  }
+}
+
+// Chat Animation Manager
+class ChatAnimationManager {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.animateChatMessages();
+  }
+
+  animateChatMessages() {
+    const messages = document.querySelectorAll('.message');
+    messages.forEach((message, index) => {
+      // Set initial state
+      message.style.opacity = '0';
+      message.style.transform = 'translateY(20px)';
+      
+      // Animate in sequence
+      setTimeout(() => {
+        message.style.transition = 'all 0.5s ease-out';
+        message.style.opacity = '1';
+        message.style.transform = 'translateY(0)';
+      }, index * 1000);
+    });
+
+    // Animate typing indicator
+    setTimeout(() => {
+      const typingIndicator = document.querySelector('.typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.style.display = 'flex';
+      }
+    }, 2000);
+
+    // Hide typing indicator and show final message
+    setTimeout(() => {
+      const typingIndicator = document.querySelector('.typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.style.display = 'none';
+      }
+    }, 4000);
+  }
+}
+
+// Enhanced Animation Manager
+class EnhancedAnimationManager extends AnimationManager {
+  init() {
+    super.init();
+    this.initScrollAnimations();
+    this.initDiagramAnimations();
+  }
+
+  initScrollAnimations() {
+    // Enhanced scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          
+          // Trigger specific animations for different elements
+          if (entry.target.classList.contains('flow-diagram')) {
+            this.animateFlowDiagram(entry.target);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    const animateElements = document.querySelectorAll('.feature-card, .example-card, .doc-card, .step, .flow-diagram');
+    animateElements.forEach(el => observer.observe(el));
+  }
+
+  animateFlowDiagram(diagram) {
+    // Animate data flow diagrams
+    const arrows = diagram.querySelectorAll('.arrow, .lifecycle-arrow, .workflow-arrow, .security-arrow, .collab-line');
+    arrows.forEach((arrow, index) => {
+      setTimeout(() => {
+        arrow.style.animationPlayState = 'running';
+      }, index * 200);
+    });
+
+    // Animate system components
+    const systems = diagram.querySelectorAll('.system, .lifecycle-step, .workflow-step, .security-step, .agent');
+    systems.forEach((system, index) => {
+      setTimeout(() => {
+        system.style.animationPlayState = 'running';
+      }, index * 300);
+    });
+  }
+
+  initDiagramAnimations() {
+    // Initialize diagram-specific animations
+    const diagrams = document.querySelectorAll('.flow-diagram');
+    diagrams.forEach(diagram => {
+      this.setupDiagramInteractivity(diagram);
+    });
+  }
+
+  setupDiagramInteractivity(diagram) {
+    // Add hover effects and interactive animations
+    const interactiveElements = diagram.querySelectorAll('.system, .lifecycle-step, .workflow-step, .security-step, .agent');
+    
+    interactiveElements.forEach(element => {
+      element.addEventListener('mouseenter', () => {
+        element.style.transform = 'scale(1.1)';
+        element.style.zIndex = '10';
+      });
+      
+      element.addEventListener('mouseleave', () => {
+        element.style.transform = 'scale(1)';
+        element.style.zIndex = '1';
+      });
+    });
+  }
+}
+
 // Global copy function for code blocks
 function copyCode(elementId) {
   const element = document.getElementById(elementId);
@@ -414,16 +601,75 @@ function copyCode(elementId) {
   }
 }
 
+// Global star function
+function starRepository() {
+  window.open('https://github.com/NoManNayeem/google-docs-mcp-server', '_blank');
+}
+
+// Mermaid Diagrams Manager
+class MermaidManager {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    // Initialize Mermaid with theme configuration
+    if (typeof mermaid !== 'undefined') {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: 'var(--accent-primary)',
+          primaryTextColor: 'var(--text-primary)',
+          primaryBorderColor: 'var(--border-color)',
+          lineColor: 'var(--accent-primary)',
+          secondaryColor: 'var(--bg-secondary)',
+          tertiaryColor: 'var(--bg-tertiary)',
+          background: 'var(--bg-primary)',
+          mainBkg: 'var(--bg-primary)',
+          secondBkg: 'var(--bg-secondary)',
+          tertiaryBkg: 'var(--bg-tertiary)'
+        },
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+          curve: 'basis'
+        }
+      });
+    }
+  }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize all managers
-  new ThemeManager();
-  new NavigationManager();
-  new AnimationManager();
-  new CodeManager();
-  new SmoothScrollManager();
-  new TypingAnimation();
-  new PerformanceOptimizer();
+  // Initialize Lucide icons with retry mechanism
+  const initLucideIcons = () => {
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+      console.log('Lucide icons initialized successfully');
+    } else {
+      console.warn('Lucide icons not loaded, retrying...');
+      setTimeout(initLucideIcons, 100);
+    }
+  };
+  
+  initLucideIcons();
+
+  // Initialize all managers with error handling
+  try {
+    new ThemeManager();
+    new NavigationManager();
+    new EnhancedAnimationManager();
+    new CodeManager();
+    new SmoothScrollManager();
+    new TypingAnimation();
+    new PerformanceOptimizer();
+    new GitHubStarManager();
+    new ChatAnimationManager();
+    new MermaidManager();
+  } catch (error) {
+    console.error('Error initializing managers:', error);
+  }
 
   // Add loading animation
   document.body.classList.add('loaded');
