@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM2Docs - Unofficial MCP Bridge for Google Docs</title>
+    <meta name="description" content="Unofficial MCP bridge between LLMs and Google Docs. Let large language models securely access, read, and interact with your documents.">
+    <meta name="keywords" content="mcp, google-docs, llm, ai, model-context-protocol, claude, unofficial">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="LLM2Docs - Unofficial MCP Bridge for Google Docs">
+    <meta property="og:description" content="Unofficial MCP bridge between LLMs and Google Docs. Let large language models securely access, read, and interact with your documents.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nomanayeem.github.io/google-docs-mcp-server">
+    <meta property="og:image" content="https://nomanayeem.github.io/google-docs-mcp-server/assets/og-image.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LLM2Docs - Unofficial MCP Bridge for Google Docs">
+    <meta name="twitter:description" content="Unofficial MCP bridge between LLMs and Google Docs. Let large language models securely access, read, and interact with your documents.">
+    <meta name="twitter:image" content="https://nomanayeem.github.io/google-docs-mcp-server/assets/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-arrow-right"></i>
+                <span>LLM2Docs</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#quick-start" class="nav-link">Quick Start</a>
+                <a href="#documentation" class="nav-link">Documentation</a>
+                <a href="#examples" class="nav-link">Examples</a>
+                <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="nav-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">LLM2Docs</span>
+                    <br>Unofficial MCP Bridge for Google Docs
+                </h1>
+                <p class="hero-description">
+                    An unofficial Model Context Protocol server that lets large language models securely access, 
+                    read, and interact with your Google Docs. Enabling smarter workflows and AI-assisted editing 
+                    for technical documentation and content creation.
+                </p>
+                <div class="hero-badges">
+                    <span class="badge">40+ Tools</span>
+                    <span class="badge">AI-Powered</span>
+                    <span class="badge">Professional</span>
+                    <span class="badge">Open Source</span>
+                </div>
+                <div class="hero-actions">
+                    <a href="#quick-start" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Get Started
+                    </a>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="code-title">Claude Desktop Integration</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Create a technical document
+"Create a new Google Doc titled 'API Documentation' 
+with a table of contents and professional formatting"
+
+# Format content
+"Make the title bold, 24pt, and center-aligned"
+
+# Add structure
+"Create a bulleted list of features and 
+a numbered list of implementation steps"
+
+# Insert media
+"Add an image from this URL with a caption"</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-description">
+                    Comprehensive tools for professional document creation and management
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Document Management</h3>
+                    <p class="feature-description">
+                        Create, read, search, and manage Google Docs with advanced metadata access
+                    </p>
+                    <ul class="feature-list">
+                        <li>Create documents with initial content</li>
+                        <li>Search across your Drive</li>
+                        <li>Access document metadata</li>
+                        <li>Batch operations</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Formatting</h3>
+                    <p class="feature-description">
+                        Complete font management, text styling, and professional formatting
+                    </p>
+                    <ul class="feature-list">
+                        <li>Font family, size, weight, style</li>
+                        <li>Text case transformation</li>
+                        <li>Subscript and superscript</li>
+                        <li>Colors and alignment</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Tables</h3>
+                    <p class="feature-description">
+                        Professional table management with borders, merging, and formatting
+                    </p>
+                    <ul class="feature-list">
+                        <li>Table formatting and borders</li>
+                        <li>Cell merging (horizontal/vertical)</li>
+                        <li>Row and column management</li>
+                        <li>Column width control</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="feature-title">Media & Images</h3>
+                    <p class="feature-description">
+                        Insert, resize, and manage images with professional alignment
+                    </p>
+                    <ul class="feature-list">
+                        <li>Insert images from URLs</li>
+                        <li>Resize and align images</li>
+                        <li>Add image captions</li>
+                        <li>Insert drawings and shapes</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h3 class="feature-title">Document Structure</h3>
+                    <p class="feature-description">
+                        Professional document organization with TOC, headers, and navigation
+                    </p>
+                    <ul class="feature-list">
+                        <li>Auto-generated table of contents</li>
+                        <li>Headers and footers</li>
+                        <li>Bookmarks and cross-references</li>
+                        <li>Section breaks and footnotes</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="feature-title">Search & Content</h3>
+                    <p class="feature-description">
+                        Advanced search capabilities and content management tools
+                    </p>
+                    <ul class="feature-list">
+                        <li>Find and replace with case sensitivity</li>
+                        <li>Document search with context</li>
+                        <li>Word count and statistics</li>
+                        <li>Spell check and suggestions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quick-start" class="quick-start">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Quick Start Guide</h2>
+                <p class="section-description">
+                    Get up and running with DocsForge MCP in minutes
+                </p>
+            </div>
+            <div class="quick-start-content">
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Install Dependencies</h3>
+                            <p>Clone the repository and install required packages</p>
+                            <div class="code-snippet">
+                                <pre><code>git clone https://github.com/NoManNayeem/docsforge-mcp.git
+cd docsforge-mcp
+npm install</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Set Up Google Cloud</h3>
+                            <p>Enable APIs and download credentials</p>
+                            <div class="code-snippet">
+                                <pre><code># Enable Google Docs API and Google Drive API
+# Download credentials.json to project root</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Build and Configure</h3>
+                            <p>Build the project and configure Claude Desktop</p>
+                            <div class="code-snippet">
+                                <pre><code>npm run build
+
+# Add to claude_desktop_config.json:
+{
+  "mcpServers": {
+    "docsforge": {
+      "command": "node",
+      "args": ["/path/to/docsforge-mcp/build/index.js"]
+    }
+  }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Start Using</h3>
+                            <p>Restart Claude Desktop and begin creating documents</p>
+                            <div class="code-snippet">
+                                <pre><code>"Create a new Google Doc with a title and some content"</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="examples">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Usage Examples</h2>
+                <p class="section-description">
+                    See DocsForge MCP in action with real-world examples
+                </p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Technical Documentation</h3>
+                    </div>
+                    <div class="example-content">
+                        <p>Create comprehensive API documentation with proper formatting</p>
+                        <div class="example-code">
+                            <pre><code>"Create a new document titled 'API Documentation' 
+with a table of contents"
+
+"Format the code examples with monospace font"
+
+"Create a bookmark called 'authentication' and 
+link to it from the overview"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>Content Creation</h3>
+                    </div>
+                    <div class="example-content">
+                        <p>Professional content with advanced formatting</p>
+                        <div class="example-code">
+                            <pre><code>"Make the title bold, 24pt, and center-aligned"
+
+"Create a bulleted list of features and 
+a numbered list of steps"
+
+"Insert an image from this URL and add a caption"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Document Management</h3>
+                    </div>
+                    <div class="example-content">
+                        <p>Efficient document organization and management</p>
+                        <div class="example-code">
+                            <pre><code>"Find all documents containing 'project' in the title"
+
+"Replace all instances of 'old-version' with 'new-version'"
+
+"Check spelling in this document and get word count"</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="documentation" class="documentation">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Complete Documentation</h2>
+                <p class="section-description">
+                    Comprehensive guides and API reference
+                </p>
+            </div>
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <i class="fas fa-book"></i>
+                    <h3>API Reference</h3>
+                    <p>Complete reference for all 40+ tools and their parameters</p>
+                    <a href="#" class="doc-link">View API Docs <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="doc-card">
+                    <i class="fas fa-play"></i>
+                    <h3>Tutorials</h3>
+                    <p>Step-by-step guides for common use cases and workflows</p>
+                    <a href="#" class="doc-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="doc-card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>FAQ</h3>
+                    <p>Frequently asked questions and troubleshooting guides</p>
+                    <a href="#" class="doc-link">Get Help <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="doc-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Community</h3>
+                    <p>Join our community for support, discussions, and contributions</p>
+                    <a href="https://github.com/NoManNayeem/docsforge-mcp/discussions" class="doc-link" target="_blank">Join Community <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>LLM2Docs</span>
+                    </div>
+                    <p class="footer-description">
+                        Unofficial MCP bridge between LLMs and Google Docs. Built by the community, for the community.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#quick-start">Quick Start</a>
+                        <a href="#documentation">Documentation</a>
+                        <a href="#examples">Examples</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Community</h4>
+                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank">GitHub</a>
+                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server/issues" target="_blank">Issues</a>
+                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server/discussions" target="_blank">Discussions</a>
+                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="https://modelcontextprotocol.io" target="_blank">MCP Specification</a>
+                        <a href="https://claude.ai" target="_blank">Claude AI</a>
+                        <a href="https://developers.google.com/docs" target="_blank">Google Docs API</a>
+                        <a href="https://docs.anthropic.com" target="_blank">Anthropic Docs</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2024 LLM2Docs. Made with ❤️ for the AI and documentation community.</p>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+# GitHub Pages Configuration for DocsForge MCP
+title: DocsForge MCP
+description: A powerful Model Context Protocol server for comprehensive Google Docs automation and technical documentation
+author: NoManNayeem
+url: https://nomanayeem.github.io/docsforge-mcp
+baseurl: /docsforge-mcp
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Navigation
+navigation:
+  - title: Features
+    url: /docsforge-mcp/#features
+  - title: Quick Start
+    url: /docsforge-mcp/#quick-start
+  - title: Documentation
+    url: /docsforge-mcp/#documentation
+  - title: Examples
+    url: /docsforge-mcp/#examples
+  - title: GitHub
+    url: https://github.com/NoManNayeem/docsforge-mcp
+
+# Social links
+social:
+  - name: GitHub
+    url: https://github.com/NoManNayeem/docsforge-mcp
+  - name: Issues
+    url: https://github.com/NoManNayeem/docsforge-mcp/issues
+  - name: Discussions
+    url: https://github.com/NoManNayeem/docsforge-mcp/discussions
+
+# SEO
+seo:
+  title: DocsForge MCP - Comprehensive Google Docs Automation
+  description: A powerful Model Context Protocol server for comprehensive Google Docs automation and technical documentation with Claude AI
+  keywords: mcp, google-docs, automation, technical-documentation, claude, ai, model-context-protocol
+  author: NoManNayeem
+  image: /docsforge-mcp/assets/og-image.png
+
+# Analytics (if needed)
+# google_analytics: GA_MEASUREMENT_ID
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "doc"

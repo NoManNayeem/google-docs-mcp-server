@@ -1,0 +1,37 @@
+{
+  "name": "google-docs-mcp-server",
+  "version": "1.0.0",
+  "description": "Unofficial MCP bridge between LLMs and Google Docs",
+  "type": "module",
+  "main": "./build/index.js",
+  "bin": {
+    "google-docs-mcp-server": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && node -e \"import('fs').then(fs => fs.chmodSync('build/index.js', '755'))\"",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["mcp", "google-docs", "llm", "ai", "model-context-protocol", "claude", "unofficial"],
+  "author": "NoManNayeem",
+  "license": "MIT",
+  "homepage": "https://nomanayeem.github.io/google-docs-mcp-server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NoManNayeem/google-docs-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NoManNayeem/google-docs-mcp-server/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "googleapis": "^140.0.0",
+    "zod": "^3.24.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  }
+}
