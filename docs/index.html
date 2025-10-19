@@ -3,191 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM2Docs - Unofficial MCP Bridge for Google Docs</title>
+    <title>LLM2Docs - Bridge LLMs to Google Docs via MCP</title>
     <meta name="description" content="Unofficial MCP bridge between LLMs and Google Docs. Let large language models securely access, read, and interact with your documents.">
     <meta name="keywords" content="mcp, google-docs, llm, ai, model-context-protocol, claude, unofficial">
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="LLM2Docs - Unofficial MCP Bridge for Google Docs">
     <meta property="og:description" content="Unofficial MCP bridge between LLMs and Google Docs. Let large language models securely access, read, and interact with your documents.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nomanayeem.github.io/google-docs-mcp-server">
-    <meta property="og:image" content="https://nomanayeem.github.io/google-docs-mcp-server/assets/og-image.png">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LLM2Docs - Unofficial MCP Bridge for Google Docs">
-    <meta name="twitter:description" content="Unofficial MCP bridge between LLMs and Google Docs. Let large language models securely access, read, and interact with your documents.">
-    <meta name="twitter:image" content="https://nomanayeem.github.io/google-docs-mcp-server/assets/og-image.png">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    
+
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- React Icons CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-icons@4.12.0/font/react-icons.css">
-    
-    <!-- Lucide Icons for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
+
     <!-- Mermaid for Diagrams -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="nav">
         <div class="nav-container">
             <div class="nav-brand">
                 <div class="brand-icon">
-                    <i data-lucide="arrow-right"></i>
+                    <i data-lucide="zap"></i>
                 </div>
                 <span class="brand-text">LLM2Docs</span>
             </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#features" class="nav-link">
-                    <i data-lucide="star"></i>
-                    <span>Features</span>
-                </a>
-                <a href="#quick-start" class="nav-link">
-                    <i data-lucide="rocket"></i>
-                    <span>Quick Start</span>
-                </a>
-                <a href="#examples" class="nav-link">
-                    <i data-lucide="code"></i>
-                    <span>Examples</span>
-                </a>
-                <a href="#documentation" class="nav-link">
-                    <i data-lucide="book"></i>
-                    <span>Docs</span>
-                </a>
-                <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="nav-link github-link" target="_blank">
+            <div class="nav-menu" id="navMenu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#quickstart" class="nav-link">Quick Start</a>
+                <a href="#documentation" class="nav-link">Docs</a>
+                <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="nav-link" target="_blank" rel="noopener">
                     <i data-lucide="github"></i>
-                    <span>GitHub</span>
+                    GitHub
                 </a>
-                <!-- Theme Toggle in Navbar -->
-                <button class="theme-toggle" id="theme-toggle">
-                    <i data-lucide="sun" style="color: black;"></i>
-                    <i data-lucide="moon"></i>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
                 </button>
             </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-background">
-            <div class="floating-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-                <div class="shape shape-4"></div>
-                <div class="shape shape-5"></div>
-            </div>
-        </div>
-        <div class="hero-container" style="margin-top: 140px;">
+        <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i data-lucide="zap"></i>
-                    <span>Unofficial MCP Server</span>
+                    <i data-lucide="sparkles"></i>
+                    <span>Unofficial MCP Server for Google Docs</span>
                 </div>
                 <h1 class="hero-title">
-                    <span class="gradient-text">LLM2Docs</span>
-                    <br>
-                    <span class="hero-subtitle">AI-Powered Google Docs Integration</span>
+                    Bridge Your <span class="gradient-text">LLMs</span> to Google Docs
                 </h1>
                 <p class="hero-description">
-                    Transform your document workflow with intelligent automation. 
-                    Let AI create, format, and manage your Google Docs with natural language commands.
+                    Seamlessly connect large language models to Google Docs through the Model Context Protocol.
+                    Create, edit, and manage documents with AI-powered workflows.
                 </p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">40+</span>
-                        <span class="stat-label">Tools</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Open Source</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">AI</span>
-                        <span class="stat-label">Powered</span>
-                    </div>
-                </div>
-                <div class="hero-actions" style="margin-bottom: 140px; display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <a href="#quick-start" class="btn btn-primary" style="display: flex; align-items: center; gap: 0.5em;">
-                        <i data-lucide="rocket"></i>
-                        <span>Get Started</span>
-                        <div class="btn-shine"></div>
+                <div class="hero-actions">
+                    <a href="#quickstart" class="btn btn-primary">
+                        Get Started
+                        <i data-lucide="arrow-right"></i>
                     </a>
-                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server"
-                        class="btn btn-secondary" target="_blank" rel="noopener"
-                        style="display: flex; align-items: center; gap: 0.5em;">
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="btn btn-secondary" target="_blank" rel="noopener">
                         <i data-lucide="github"></i>
-                        <span>View on GitHub</span>
+                        View on GitHub
                     </a>
-                    <button class="btn btn-tertiary github-star-btn" type="button" id="github-star-btn"
-                        style="display: flex; align-items: center; gap: 0.5em;" aria-label="Star this repo" title="Star on GitHub">
-                        <i data-lucide="star"></i>
-                        <span>Star</span>
-                        <span class="star-count" id="star-count">0</span>
-                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <i data-lucide="zap"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">40+</span>
+                            <span class="stat-label">MCP Tools</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i data-lucide="shield-check"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">OAuth 2.0</span>
+                            <span class="stat-label">Secure Auth</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i data-lucide="clock"></i>
+                        <div class="stat-content">
+                            <span class="stat-value">&lt;10 min</span>
+                            <span class="stat-label">Setup Time</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="code-window">
-                    <div class="window-header">
-                        <div class="window-controls">
-                            <span class="control close"></span>
-                            <span class="control minimize"></span>
-                            <span class="control maximize"></span>
+                <div class="code-preview">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
-                        <div class="window-title">
-                            <i data-lucide="terminal"></i>
-                            <span>Claude Desktop</span>
+                        <span class="code-title">MCP Client</span>
+                    </div>
+                    <div class="code-body">
+                        <div class="code-line">
+                            <span class="code-prompt">></span>
+                            <span class="code-text">Create a new doc "Project Brief"</span>
+                        </div>
+                        <div class="code-output">
+                            <i data-lucide="check-circle"></i>
+                            <span>Document created successfully</span>
+                        </div>
+                        <div class="code-line">
+                            <span class="code-prompt">></span>
+                            <span class="code-text">Format with heading and bullets</span>
+                        </div>
+                        <div class="code-output">
+                            <i data-lucide="check-circle"></i>
+                            <span>Formatting applied</span>
                         </div>
                     </div>
-                    <div class="window-content">
-                        <div class="terminal-line">
-                            <span class="prompt">$</span>
-                            <span class="command">Create a technical document</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section id="demo" class="live-demo">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">See It In Action</h2>
+                <p class="section-subtitle">Watch how LLM2Docs transforms natural language into formatted Google Docs in real-time</p>
+            </div>
+            <div class="demo-wrapper">
+                <div class="demo-panel chat-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i data-lucide="message-square"></i>
+                            <span>MCP Client</span>
                         </div>
-                        <div class="terminal-output">
-                            <div class="output-line">
-                                <span class="success">✓</span>
-                                <span>Created "API Documentation"</span>
+                        <div class="status-badge">
+                            <span class="status-dot"></span>
+                            <span>Connected</span>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message user-message">
+                            <div class="message-avatar">
+                                <i data-lucide="user"></i>
                             </div>
-                            <div class="output-line">
-                                <span class="success">✓</span>
-                                <span>Added table of contents</span>
-                            </div>
-                            <div class="output-line">
-                                <span class="success">✓</span>
-                                <span>Applied professional formatting</span>
+                            <div class="message-bubble">
+                                <p>Create a new document titled "Product Roadmap 2024"</p>
                             </div>
                         </div>
-                        <div class="terminal-line">
-                            <span class="prompt">$</span>
-                            <span class="command">Format the title with Arial 24pt</span>
+                        <div class="chat-message assistant-message">
+                            <div class="message-avatar assistant-avatar">
+                                <i data-lucide="sparkles"></i>
+                            </div>
+                            <div class="message-bubble">
+                                <p>Creating document "Product Roadmap 2024"...</p>
+                            </div>
                         </div>
-                        <div class="terminal-output">
-                            <div class="output-line">
-                                <span class="success">✓</span>
-                                <span>Font changed to Arial</span>
+                        <div class="chat-message user-message">
+                            <div class="message-avatar">
+                                <i data-lucide="user"></i>
                             </div>
-                            <div class="output-line">
-                                <span class="success">✓</span>
-                                <span>Size set to 24pt</span>
+                            <div class="message-bubble">
+                                <p>Add a heading "Q1 Objectives" and create a bullet list with 3 items</p>
                             </div>
+                        </div>
+                        <div class="chat-message assistant-message">
+                            <div class="message-avatar assistant-avatar">
+                                <i data-lucide="sparkles"></i>
+                            </div>
+                            <div class="message-bubble">
+                                <p>Adding heading and bullet list...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-panel doc-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i data-lucide="file-text"></i>
+                            <span>Google Docs Live Preview</span>
+                        </div>
+                        <div class="doc-controls">
+                            <i data-lucide="share-2"></i>
+                            <i data-lucide="download"></i>
+                        </div>
+                    </div>
+                    <div class="doc-content" id="docContent">
+                        <div class="doc-title-bar">
+                            <h1 class="doc-title" id="docTitle">Product Roadmap 2024</h1>
+                        </div>
+                        <div class="doc-body" id="docBody">
+                            <h2 class="doc-heading" id="docHeading">Q1 Objectives</h2>
+                            <ul class="doc-list" id="docList">
+                                <li>Launch new AI-powered features</li>
+                                <li>Improve user onboarding experience</li>
+                                <li>Expand to European markets</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -199,497 +230,126 @@
     <section id="features" class="features">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-highlight">Powerful Features</span>
-                    <br>for Professional Documents
-                </h2>
-                <p class="section-description">
-                    Comprehensive tools for creating, formatting, and managing Google Docs with AI assistance
-                </p>
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-subtitle">Everything you need to integrate LLMs with Google Docs</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i data-lucide="file-text"></i>
                     </div>
                     <h3 class="feature-title">Document Management</h3>
-                    <p class="feature-description">
-                        Create, read, search, and manage Google Docs with advanced metadata access
-                    </p>
-                    <ul class="feature-list">
-                        <li><i data-lucide="check"></i> Create documents with initial content</li>
-                        <li><i data-lucide="check"></i> Search across your Drive</li>
-                        <li><i data-lucide="check"></i> Access document metadata</li>
-                        <li><i data-lucide="check"></i> Batch operations</li>
-                    </ul>
+                    <p class="feature-description">Create, read, search, and manage Google Docs with advanced metadata access and batch operations.</p>
                 </div>
-
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i data-lucide="palette"></i>
                     </div>
-                    <h3 class="feature-title">Advanced Formatting</h3>
-                    <p class="feature-description">
-                        Complete font management, text styling, and professional formatting
-                    </p>
-                    <ul class="feature-list">
-                        <li><i data-lucide="check"></i> Font family, size, weight, style</li>
-                        <li><i data-lucide="check"></i> Text case transformation</li>
-                        <li><i data-lucide="check"></i> Subscript and superscript</li>
-                        <li><i data-lucide="check"></i> Colors and alignment</li>
-                    </ul>
+                    <h3 class="feature-title">Rich Formatting</h3>
+                    <p class="feature-description">Complete font management, text styling, colors, alignment, and professional formatting options.</p>
                 </div>
-
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i data-lucide="table"></i>
                     </div>
                     <h3 class="feature-title">Advanced Tables</h3>
-                    <p class="feature-description">
-                        Professional table management with borders, merging, and formatting
-                    </p>
-                    <ul class="feature-list">
-                        <li><i data-lucide="check"></i> Table formatting and borders</li>
-                        <li><i data-lucide="check"></i> Cell merging (horizontal/vertical)</li>
-                        <li><i data-lucide="check"></i> Row and column management</li>
-                        <li><i data-lucide="check"></i> Column width control</li>
-                    </ul>
+                    <p class="feature-description">Professional table management with borders, cell merging, and dynamic row/column operations.</p>
                 </div>
-
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i data-lucide="image"></i>
                     </div>
-                    <h3 class="feature-title">Media & Images</h3>
-                    <p class="feature-description">
-                        Insert, resize, and manage images with professional alignment
-                    </p>
-                    <ul class="feature-list">
-                        <li><i data-lucide="check"></i> Insert images from URLs</li>
-                        <li><i data-lucide="check"></i> Resize and align images</li>
-                        <li><i data-lucide="check"></i> Add image captions</li>
-                        <li><i data-lucide="check"></i> Insert drawings and shapes</li>
-                    </ul>
+                    <h3 class="feature-title">Media Support</h3>
+                    <p class="feature-description">Insert, resize, and manage images with professional alignment and caption support.</p>
                 </div>
-
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i data-lucide="layers"></i>
                     </div>
                     <h3 class="feature-title">Document Structure</h3>
-                    <p class="feature-description">
-                        Professional document organization with TOC, headers, and navigation
-                    </p>
-                    <ul class="feature-list">
-                        <li><i data-lucide="check"></i> Auto-generated table of contents</li>
-                        <li><i data-lucide="check"></i> Headers and footers</li>
-                        <li><i data-lucide="check"></i> Bookmarks and cross-references</li>
-                        <li><i data-lucide="check"></i> Section breaks and footnotes</li>
-                    </ul>
+                    <p class="feature-description">Auto-generated table of contents, headers, footers, bookmarks, and cross-references.</p>
                 </div>
-
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="feature-card">
                     <div class="feature-icon">
-                        <i data-lucide="search"></i>
+                        <i data-lucide="shield-check"></i>
                     </div>
-                    <h3 class="feature-title">Search & Content</h3>
-                    <p class="feature-description">
-                        Advanced search capabilities and content management tools
-                    </p>
-                    <ul class="feature-list">
-                        <li><i data-lucide="check"></i> Find and replace with case sensitivity</li>
-                        <li><i data-lucide="check"></i> Document search with context</li>
-                        <li><i data-lucide="check"></i> Word count and statistics</li>
-                        <li><i data-lucide="check"></i> Spell check and suggestions</li>
-                    </ul>
+                    <h3 class="feature-title">Secure Access</h3>
+                    <p class="feature-description">OAuth 2.0 authentication with scoped permissions and workspace-level security controls.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Quick Start Section -->
-    <section id="quick-start" class="quick-start">
+    <section id="quickstart" class="quickstart">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-highlight">Quick Start</span>
-                    <br>Get Running in Minutes
-                </h2>
-                <p class="section-description">
-                    Simple setup process to get LLM2Docs working with Claude Desktop
-                </p>
+                <h2 class="section-title">Quick Start</h2>
+                <p class="section-subtitle">Get up and running in under 10 minutes</p>
             </div>
-            <div class="quick-start-content">
-                <div class="steps-container">
-                    <div class="step" data-aos="fade-right" data-aos-delay="100">
-                        <div class="step-number">
-                            <span>1</span>
-                        </div>
-                        <div class="step-content">
-                            <h3>Install Dependencies</h3>
-                            <p>Clone the repository and install required packages</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-title">Terminal</span>
-                                    <button class="copy-btn" onclick="copyCode('step1-code')">
-                                        <i data-lucide="copy"></i>
-                                    </button>
-                                </div>
-                                <pre><code id="step1-code">git clone https://github.com/NoManNayeem/google-docs-mcp-server.git
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Clone & Install</h3>
+                        <p class="step-description">Clone the repository and install dependencies</p>
+                        <div class="code-block">
+                            <button class="copy-btn" aria-label="Copy code">
+                                <i data-lucide="copy"></i>
+                            </button>
+                            <pre><code>git clone https://github.com/NoManNayeem/google-docs-mcp-server.git
 cd google-docs-mcp-server
 npm install</code></pre>
-                            </div>
                         </div>
                     </div>
-
-                    <div class="step" data-aos="fade-left" data-aos-delay="200">
-                        <div class="step-number">
-                            <span>2</span>
-                        </div>
-                        <div class="step-content">
-                            <h3>Set Up Google Cloud</h3>
-                            <p>Enable APIs and download credentials</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-title">Google Cloud Console</span>
-                                </div>
-                                <pre><code># Enable Google Docs API and Google Drive API
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Setup Google Cloud</h3>
+                        <p class="step-description">Enable APIs and download credentials</p>
+                        <div class="code-block">
+                            <button class="copy-btn" aria-label="Copy code">
+                                <i data-lucide="copy"></i>
+                            </button>
+                            <pre><code># Enable Google Docs API and Google Drive API
 # Download credentials.json to project root</code></pre>
-                            </div>
                         </div>
                     </div>
-
-                    <div class="step" data-aos="fade-right" data-aos-delay="300">
-                        <div class="step-number">
-                            <span>3</span>
-                        </div>
-                        <div class="step-content">
-                            <h3>Build and Configure</h3>
-                            <p>Build the project and configure Claude Desktop</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-title">Configuration</span>
-                                    <button class="copy-btn" onclick="copyCode('step3-code')">
-                                        <i data-lucide="copy"></i>
-                                    </button>
-                                </div>
-                                <pre><code id="step3-code">npm run build
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Build & Configure</h3>
+                        <p class="step-description">Build the project and configure MCP Client or Claude Desktop</p>
+                        <div class="code-block">
+                            <button class="copy-btn" aria-label="Copy code">
+                                <i data-lucide="copy"></i>
+                            </button>
+                            <pre><code>npm run build
 
 # Add to claude_desktop_config.json:
 {
   "mcpServers": {
     "llm2docs": {
       "command": "node",
-      "args": ["/path/to/google-docs-mcp-server/build/index.js"]
+      "args": ["/path/to/build/index.js"]
     }
   }
 }</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step" data-aos="fade-left" data-aos-delay="400">
-                        <div class="step-number">
-                            <span>4</span>
-                        </div>
-                        <div class="step-content">
-                            <h3>Start Using</h3>
-                            <p>Restart Claude Desktop and begin creating documents</p>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-title">Claude Desktop</span>
-                                </div>
-                                <pre><code>"Create a new Google Doc with a title and some content"</code></pre>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Live Demo Section -->
-    <section id="live-demo" class="live-demo">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-highlight">See LLM2Docs in Action</span>
-                    <br>Live AI Conversation Demo
-                </h2>
-                <p class="section-description">
-                    Watch how users interact with AI to create and format documents in real-time
-                </p>
-            </div>
-            <div class="demo-container">
-                <div class="chat-panel">
-                    <div class="chat-header">
-                        <div class="chat-avatar">
-                            <i data-lucide="user"></i>
-                        </div>
-                        <div class="chat-info">
-                            <h3>User</h3>
-                            <span class="status">Typing...</span>
-                        </div>
-                    </div>
-                    <div class="chat-messages" id="chat-messages">
-                        <div class="message user-message">
-                            <div class="message-content">
-                                <p>Create a new Google Doc titled "Project Proposal" with a professional heading and bullet points for the key features.</p>
-                            </div>
-                            <div class="message-time">2:34 PM</div>
-                        </div>
-                        <div class="message ai-message">
-                            <div class="message-avatar">
-                                <i data-lucide="bot"></i>
-                            </div>
-                            <div class="message-content">
-                                <p>I'll create a new Google Doc titled "Project Proposal" with professional formatting. Let me set up the document structure for you.</p>
-                                <div class="typing-indicator">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                            <div class="message-time">2:34 PM</div>
-                        </div>
-                        <div class="message user-message">
-                            <div class="message-content">
-                                <p>Make the title bold, 24pt, and center-aligned. Then add a table of contents.</p>
-                            </div>
-                            <div class="message-time">2:35 PM</div>
-                        </div>
-                        <div class="message ai-message">
-                            <div class="message-avatar">
-                                <i data-lucide="bot"></i>
-                            </div>
-                            <div class="message-content">
-                                <p>Perfect! I've formatted the title with Arial 24pt, made it bold and center-aligned, and added a table of contents. The document is now ready for your content.</p>
-                            </div>
-                            <div class="message-time">2:35 PM</div>
-                        </div>
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" placeholder="Ask me to create or format your document..." disabled>
-                        <button class="send-btn" disabled>
-                            <i data-lucide="send"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="doc-preview">
-                    <div class="preview-header">
-                        <div class="preview-controls">
-                            <span class="control close"></span>
-                            <span class="control minimize"></span>
-                            <span class="control maximize"></span>
-                        </div>
-                        <div class="preview-title">
-                            <i data-lucide="file-text"></i>
-                            <span>Project Proposal - Google Docs</span>
-                        </div>
-                    </div>
-                    <div class="preview-content">
-                        <div class="doc-title">
-                            <h1>Project Proposal</h1>
-                        </div>
-                        <div class="doc-toc">
-                            <h2>Table of Contents</h2>
-                            <ul>
-                                <li>Executive Summary</li>
-                                <li>Project Overview</li>
-                                <li>Key Features</li>
-                                <li>Implementation Plan</li>
-                                <li>Budget & Timeline</li>
-                            </ul>
-                        </div>
-                        <div class="doc-content">
-                            <h2>Executive Summary</h2>
-                            <p>This proposal outlines a comprehensive project plan for developing an innovative solution that addresses current market needs and provides significant value to stakeholders.</p>
-                            
-                            <h2>Key Features</h2>
-                            <ul>
-                                <li>Advanced AI Integration</li>
-                                <li>Real-time Collaboration</li>
-                                <li>Scalable Architecture</li>
-                                <li>User-friendly Interface</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Data Flow Diagrams Section -->
-    <section id="data-flow" class="data-flow">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-highlight">How LLM2Docs Works</span>
-                    <br>Interactive Data Flow Animations
-                </h2>
-                <p class="section-description">
-                    See how data flows between AI models, external tools, and Google Docs
-                </p>
-            </div>
-            <div class="flow-diagrams">
-                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="100">
-                    <h3>Data Flow Diagram</h3>
-                    <div class="mermaid">
-                        graph TD
-                            A[🤖 AI Model] --> B[🔧 MCP Server]
-                            B --> C[📄 Google Docs]
-                            A --> D[💬 Claude Desktop]
-                            B --> E[🔍 Search & Tools]
-                            E --> C
-                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
-                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
-                            style C fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
-                            style D fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
-                            style E fill:#ef4444,stroke:#dc2626,stroke-width:3px,color:#fff
-                    </div>
-                </div>
-
-                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="500">
-                    <h3>Multi-Agent Collaboration</h3>
-                    <div class="mermaid">
-                        graph TD
-                            A[🤖 Agent 1] --> D[🌐 MCP Hub]
-                            B[🤖 Agent 2] --> D
-                            C[🤖 Agent 3] --> D
-                            D --> E[📊 Shared Context]
-                            D --> F[🔄 Task Coordination]
-                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
-                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
-                            style C fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
-                            style D fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
-                            style E fill:#ef4444,stroke:#dc2626,stroke-width:3px,color:#fff
-                            style F fill:#06b6d4,stroke:#0891b2,stroke-width:3px,color:#fff
-                    </div>
-                </div>
-
-                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Session Lifecycle</h3>
-                    <div class="mermaid">
-                        graph LR
-                            A[🚀 Start Session] --> B[🔗 Establish Connection]
-                            B --> C[🔄 Data Exchange]
-                            C --> D[🏁 End Session]
-                            style A fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
-                            style B fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
-                            style C fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
-                            style D fill:#ef4444,stroke:#dc2626,stroke-width:3px,color:#fff
-                    </div>
-                </div>
-
-                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="300">
-                    <h3>Tool Invocation Workflow</h3>
-                    <div class="mermaid">
-                        graph LR
-                            A[📤 AI sends request] --> B[⚙️ Tool processes]
-                            B --> C[📥 Response returned]
-                            C --> D[🔄 Context updated]
-                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
-                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
-                            style C fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
-                            style D fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
-                    </div>
-                </div>
-
-                <div class="flow-diagram" data-aos="fade-up" data-aos-delay="400">
-                    <h3>Security & Access Control</h3>
-                    <div class="mermaid">
-                        graph LR
-                            A[🤝 Secure Handshake] --> B[🔒 Encryption]
-                            B --> C[🛡️ Access Control]
-                            C --> D[✅ Secure Interaction]
-                            style A fill:#3b82f6,stroke:#1e40af,stroke-width:3px,color:#fff
-                            style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:3px,color:#fff
-                            style C fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
-                            style D fill:#10b981,stroke:#047857,stroke-width:3px,color:#fff
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Examples Section -->
-    <section id="examples" class="examples">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-highlight">Real Examples</span>
-                    <br>See LLM2Docs in Action
-                </h2>
-                <p class="section-description">
-                    Practical examples of how LLM2Docs transforms your document workflow
-                </p>
-            </div>
-            <div class="examples-grid">
-                <div class="example-card" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <i data-lucide="code"></i>
-                        </div>
-                        <h3>Technical Documentation</h3>
-                    </div>
-                    <div class="example-content">
-                        <p>Create comprehensive API documentation with proper formatting</p>
-                        <div class="example-code">
-                            <div class="code-header">
-                                <span class="code-title">Claude Desktop</span>
-                            </div>
-                            <pre><code>"Create a new document titled 'API Documentation' 
-with a table of contents"
-
-"Format the code examples with monospace font"
-
-"Create a bookmark called 'authentication' and 
-link to it from the overview"</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="example-card" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <i data-lucide="edit"></i>
-                        </div>
-                        <h3>Content Creation</h3>
-                    </div>
-                    <div class="example-content">
-                        <p>Professional content with advanced formatting</p>
-                        <div class="example-code">
-                            <div class="code-header">
-                                <span class="code-title">Claude Desktop</span>
-                            </div>
-                            <pre><code>"Make the title bold, 24pt, and center-aligned"
-
-"Create a bulleted list of features and 
-a numbered list of steps"
-
-"Insert an image from this URL and add a caption"</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="example-card" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <i data-lucide="settings"></i>
-                        </div>
-                        <h3>Document Management</h3>
-                    </div>
-                    <div class="example-content">
-                        <p>Efficient document organization and management</p>
-                        <div class="example-code">
-                            <div class="code-header">
-                                <span class="code-title">Claude Desktop</span>
-                            </div>
-                            <pre><code>"Find all documents containing 'project' in the title"
-
-"Replace all instances of 'old-version' with 'new-version'"
-
-"Check spelling in this document and get word count"</code></pre>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Start Using</h3>
+                        <p class="step-description">Restart Claude Desktop and begin creating documents</p>
+                        <div class="code-block">
+                            <button class="copy-btn" aria-label="Copy code">
+                                <i data-lucide="copy"></i>
+                            </button>
+                            <pre><code>"Create a new Google Doc with title and content"</code></pre>
                         </div>
                     </div>
                 </div>
@@ -701,58 +361,200 @@ a numbered list of steps"
     <section id="documentation" class="documentation">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-highlight">Complete Documentation</span>
-                    <br>Everything You Need to Know
-                </h2>
-                <p class="section-description">
-                    Comprehensive guides, API reference, and community resources
-                </p>
+                <h2 class="section-title">Documentation</h2>
+                <p class="section-subtitle">Comprehensive guides and resources</p>
             </div>
             <div class="docs-grid">
-                <div class="doc-card" data-aos="fade-up" data-aos-delay="100">
+                <a href="https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/README.md" class="doc-card" target="_blank" rel="noopener">
                     <div class="doc-icon">
-                        <i data-lucide="book"></i>
+                        <i data-lucide="book-open"></i>
                     </div>
-                    <h3>API Reference</h3>
-                    <p>Complete reference for all 40+ tools and their parameters</p>
-                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/README.md" class="doc-link" target="_blank">
-                        <span>View API Docs</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                <div class="doc-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="doc-title">API Reference</h3>
+                    <p class="doc-description">Complete reference for all 40+ MCP tools and parameters</p>
+                    <span class="doc-link">
+                        Read docs
+                        <i data-lucide="arrow-right"></i>
+                    </span>
+                </a>
+                <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="doc-card" target="_blank" rel="noopener">
                     <div class="doc-icon">
-                        <i data-lucide="play"></i>
+                        <i data-lucide="code"></i>
                     </div>
-                    <h3>Tutorials</h3>
-                    <p>Step-by-step guides for common use cases and workflows</p>
-                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/README.md" class="doc-link" target="_blank">
-                        <span>Start Learning</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                <div class="doc-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="doc-title">Examples</h3>
+                    <p class="doc-description">Step-by-step guides for common use cases and workflows</p>
+                    <span class="doc-link">
+                        View examples
+                        <i data-lucide="arrow-right"></i>
+                    </span>
+                </a>
+                <a href="https://github.com/NoManNayeem/google-docs-mcp-server/issues" class="doc-card" target="_blank" rel="noopener">
                     <div class="doc-icon">
                         <i data-lucide="help-circle"></i>
                     </div>
-                    <h3>FAQ</h3>
-                    <p>Frequently asked questions and troubleshooting guides</p>
-                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/issues" class="doc-link" target="_blank">
-                        <span>Get Help</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                <div class="doc-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="doc-icon">
-                        <i data-lucide="users"></i>
+                    <h3 class="doc-title">Support</h3>
+                    <p class="doc-description">Get help, report issues, and request features</p>
+                    <span class="doc-link">
+                        Get help
+                        <i data-lucide="arrow-right"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Understanding the LLM2Docs architecture and data flow</p>
+            </div>
+            <div class="diagrams-grid">
+                <div class="diagram-card">
+                    <h3 class="diagram-title">
+                        <i data-lucide="network"></i>
+                        System Architecture
+                    </h3>
+                    <div class="mermaid">
+graph TD
+    A[Claude Desktop] -->|MCP Protocol| B[LLM2Docs Server]
+    B -->|OAuth 2.0| C[Google Cloud API]
+    C -->|Read/Write| D[Google Docs]
+    B -->|Audit Logs| E[Event Logger]
+
+    style A fill:#667eea,stroke:#764ba2,stroke-width:3px,color:#fff
+    style B fill:#3b82f6,stroke:#2563eb,stroke-width:3px,color:#fff
+    style C fill:#8b5cf6,stroke:#7c3aed,stroke-width:3px,color:#fff
+    style D fill:#10b981,stroke:#059669,stroke-width:3px,color:#fff
+    style E fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
                     </div>
-                    <h3>Community</h3>
-                    <p>Join our community for support, discussions, and contributions</p>
-                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/discussions" class="doc-link" target="_blank">
-                        <span>Join Community</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+                </div>
+                <div class="diagram-card">
+                    <h3 class="diagram-title">
+                        <i data-lucide="workflow"></i>
+                        Request Flow
+                    </h3>
+                    <div class="mermaid">
+sequenceDiagram
+    participant U as User
+    participant C as Claude Desktop
+    participant M as MCP Server
+    participant G as Google Docs
+
+    U->>C: Natural language command
+    C->>M: MCP tool request
+    M->>M: Validate & process
+    M->>G: API call
+    G->>M: Response
+    M->>C: Formatted result
+    C->>U: Confirmation
+
+    Note over M,G: Secure OAuth 2.0
+                    </div>
+                </div>
+                <div class="diagram-card">
+                    <h3 class="diagram-title">
+                        <i data-lucide="layers"></i>
+                        MCP Tools Overview
+                    </h3>
+                    <div class="mermaid">
+graph LR
+    A[MCP Tools] --> B[Document Ops]
+    A --> C[Formatting]
+    A --> D[Media]
+    A --> E[Structure]
+
+    B --> B1[Create]
+    B --> B2[Read]
+    B --> B3[Search]
+
+    C --> C1[Styles]
+    C --> C2[Tables]
+    C --> C3[Lists]
+
+    D --> D1[Images]
+    D --> D2[Links]
+
+    E --> E1[Headers]
+    E --> E2[TOC]
+
+    style A fill:#667eea,stroke:#764ba2,stroke-width:2px,color:#fff
+    style B fill:#3b82f6,stroke:#2563eb,stroke-width:2px,color:#fff
+    style C fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff
+    style D fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
+    style E fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff
+                    </div>
+                </div>
+                <div class="diagram-card">
+                    <h3 class="diagram-title">
+                        <i data-lucide="shield"></i>
+                        Security Flow
+                    </h3>
+                    <div class="mermaid">
+graph TB
+    A[Client Request] --> B{OAuth Token Valid?}
+    B -->|No| C[Re-authenticate]
+    B -->|Yes| D{Scope Check}
+    C --> D
+    D -->|Denied| E[Return Error]
+    D -->|Allowed| F[Execute Operation]
+    F --> G[Log Event]
+    G --> H[Return Response]
+
+    style A fill:#667eea,stroke:#764ba2,stroke-width:2px,color:#fff
+    style B fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff
+    style D fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff
+    style F fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
+    style E fill:#ef4444,stroke:#dc2626,stroke-width:2px,color:#fff
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-wrapper">
+                <div class="cta-content">
+                    <div class="cta-icon">
+                        <i data-lucide="rocket"></i>
+                    </div>
+                    <h2 class="cta-title">Ready to Transform Your Workflow?</h2>
+                    <p class="cta-description">Join developers and teams using LLM2Docs to supercharge their documentation workflow with AI-powered automation</p>
+                    <div class="cta-features">
+                        <div class="cta-feature">
+                            <i data-lucide="check-circle"></i>
+                            <span>10-minute setup</span>
+                        </div>
+                        <div class="cta-feature">
+                            <i data-lucide="check-circle"></i>
+                            <span>No credit card required</span>
+                        </div>
+                        <div class="cta-feature">
+                            <i data-lucide="check-circle"></i>
+                            <span>100% open source</span>
+                        </div>
+                        <div class="cta-feature">
+                            <i data-lucide="check-circle"></i>
+                            <span>Active community support</span>
+                        </div>
+                    </div>
+                    <div class="cta-actions">
+                        <a href="#quickstart" class="btn btn-outline btn-lg">
+                            <i data-lucide="zap"></i>
+                            Get Started Now
+                            <i data-lucide="arrow-right"></i>
+                        </a>
+                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server" class="btn btn-outline btn-lg" target="_blank" rel="noopener">
+                            <i data-lucide="github"></i>
+                            Star on GitHub
+                        </a>
+                    </div>
+                    <p class="cta-note">
+                        <i data-lucide="info"></i>
+                        Free forever • MIT Licensed • Self-hostable
+                    </p>
                 </div>
             </div>
         </div>
@@ -763,56 +565,25 @@ a numbered list of steps"
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="footer-logo">
-                        <i data-lucide="arrow-right"></i>
-                        <span>LLM2Docs</span>
+                    <div class="brand-icon">
+                        <i data-lucide="zap"></i>
                     </div>
-                    <p class="footer-description">
-                        Unofficial MCP bridge between LLMs and Google Docs. Built by the community, for the community.
-                    </p>
-                    <div class="footer-social">
-                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank" class="social-link">
-                            <i data-lucide="github"></i>
-                        </a>
-                        <a href="https://twitter.com" target="_blank" class="social-link">
-                            <i data-lucide="twitter"></i>
-                        </a>
-                    </div>
+                    <span class="brand-text">LLM2Docs</span>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Product</h4>
-                        <a href="#features">Features</a>
-                        <a href="#quick-start">Quick Start</a>
-                        <a href="#documentation">Documentation</a>
-                        <a href="#examples">Examples</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Community</h4>
-                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank">GitHub</a>
-                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server/issues" target="_blank">Issues</a>
-                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server/discussions" target="_blank">Discussions</a>
-                        <a href="https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Resources</h4>
-                        <a href="https://modelcontextprotocol.io" target="_blank">MCP Specification</a>
-                        <a href="https://claude.ai" target="_blank">Claude AI</a>
-                        <a href="https://developers.google.com/docs" target="_blank">Google Docs API</a>
-                        <a href="https://docs.anthropic.com" target="_blank">Anthropic Docs</a>
-                    </div>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/issues" target="_blank" rel="noopener">Issues</a>
+                    <a href="https://github.com/NoManNayeem/google-docs-mcp-server/discussions" target="_blank" rel="noopener">Discussions</a>
+                    <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP Spec</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <div class="footer-copyright">
-                    <p>&copy; 2024 LLM2Docs. Made with love for the AI and documentation community.</p>
-                </div>
+                <p>&copy; 2024 LLM2Docs. Built with care for the AI community.</p>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

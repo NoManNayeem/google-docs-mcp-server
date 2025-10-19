@@ -1,0 +1,199 @@
+# LLM2Docs - MCP Server for Google Docs
+
+> Unofficial MCP bridge between Large Language Models and Google Docs
+
+## Overview
+
+LLM2Docs is an open-source Model Context Protocol (MCP) server that enables seamless integration between Large Language Models (like Claude) and Google Docs. It allows LLMs to create, read, edit, and manage Google Docs documents through natural language commands.
+
+## Key Features
+
+- **Document Management**: Create, read, search, and manage Google Docs with advanced metadata access and batch operations
+- **Rich Formatting**: Complete font management, text styling, colors, alignment, and professional formatting options
+- **Advanced Tables**: Professional table management with borders, cell merging, and dynamic row/column operations
+- **Media Support**: Insert, resize, and manage images with professional alignment and caption support
+- **Document Structure**: Auto-generated table of contents, headers, footers, bookmarks, and cross-references
+- **Secure Access**: OAuth 2.0 authentication with scoped permissions and workspace-level security controls
+
+## Technical Stack
+
+- **Protocol**: Model Context Protocol (MCP)
+- **Runtime**: Node.js
+- **Authentication**: Google OAuth 2.0
+- **APIs**: Google Docs API, Google Drive API
+- **Language**: TypeScript
+
+## Architecture
+
+```
+[Claude Desktop] <--MCP Protocol--> [LLM2Docs Server] <--OAuth 2.0--> [Google Cloud API] <--Read/Write--> [Google Docs]
+```
+
+## Installation
+
+### Prerequisites
+- Node.js (v16 or higher)
+- Claude Desktop application
+- Google Cloud Console account
+
+### Quick Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/NoManNayeem/google-docs-mcp-server.git
+   cd google-docs-mcp-server
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Setup Google Cloud:
+   - Enable Google Docs API and Google Drive API
+   - Download credentials.json to project root
+
+4. Build the project:
+   ```bash
+   npm run build
+   ```
+
+5. Configure Claude Desktop:
+   Add to `claude_desktop_config.json`:
+   ```json
+   {
+     "mcpServers": {
+       "llm2docs": {
+         "command": "node",
+         "args": ["/path/to/build/index.js"]
+       }
+     }
+   }
+   ```
+
+6. Restart Claude Desktop and start using!
+
+## Available MCP Tools (40+)
+
+### Document Operations
+- `create_document`: Create a new Google Doc
+- `read_document`: Read document content
+- `search_documents`: Search for documents
+- `get_document_metadata`: Get document metadata
+- `update_document_title`: Update document title
+- `delete_document`: Delete a document
+
+### Formatting Tools
+- `apply_text_style`: Apply text styling (bold, italic, underline)
+- `set_font_family`: Change font family
+- `set_font_size`: Change font size
+- `set_text_color`: Set text color
+- `set_background_color`: Set background color
+- `set_alignment`: Set text alignment
+
+### Table Operations
+- `insert_table`: Insert a table
+- `add_table_row`: Add rows to table
+- `add_table_column`: Add columns to table
+- `delete_table_row`: Delete table rows
+- `delete_table_column`: Delete table columns
+- `merge_table_cells`: Merge table cells
+- `set_table_borders`: Configure table borders
+
+### Media Operations
+- `insert_image`: Insert an image
+- `resize_image`: Resize an image
+- `insert_link`: Insert a hyperlink
+
+### Structure Operations
+- `insert_header`: Add document header
+- `insert_footer`: Add document footer
+- `create_table_of_contents`: Generate TOC
+- `insert_bookmark`: Add bookmark
+- `create_cross_reference`: Create cross-reference
+
+## Usage Examples
+
+### Create a Document
+```
+"Create a new Google Doc titled 'Project Roadmap 2024'"
+```
+
+### Format Text
+```
+"Format the first paragraph with bold text and blue color"
+```
+
+### Insert Table
+```
+"Insert a 3x4 table with headers in the first row"
+```
+
+### Add Images
+```
+"Insert an image from [URL] and resize it to 500px wide"
+```
+
+## Security
+
+- OAuth 2.0 authentication for secure API access
+- Scoped permissions (read/write access as needed)
+- No storage of credentials
+- Audit logging for all operations
+- Token refresh handling
+
+## Use Cases
+
+1. **Automated Documentation**: Generate reports and documents from data
+2. **Content Creation**: AI-assisted writing and formatting
+3. **Template Generation**: Create document templates programmatically
+4. **Batch Operations**: Process multiple documents efficiently
+5. **Integration Workflows**: Connect docs with other tools
+6. **Data Extraction**: Extract structured data from documents
+
+## Performance
+
+- Fast document operations (< 2s average)
+- Batch processing support
+- Efficient caching mechanisms
+- Minimal API call overhead
+
+## Limitations
+
+- Requires active internet connection
+- Subject to Google API quotas
+- Limited to Google Workspace features
+- Requires Google Cloud project setup
+
+## Contributing
+
+This is an open-source project. Contributions are welcome!
+
+Repository: https://github.com/NoManNayeem/google-docs-mcp-server
+
+## License
+
+MIT License - Free and open source
+
+## Links
+
+- Documentation: https://github.com/NoManNayeem/google-docs-mcp-server/blob/main/README.md
+- Issues: https://github.com/NoManNayeem/google-docs-mcp-server/issues
+- Discussions: https://github.com/NoManNayeem/google-docs-mcp-server/discussions
+- MCP Specification: https://modelcontextprotocol.io
+- Website: https://nomanayeem.github.io/google-docs-mcp-server
+
+## Support
+
+For questions, issues, or feature requests, please visit:
+- GitHub Issues: https://github.com/NoManNayeem/google-docs-mcp-server/issues
+- GitHub Discussions: https://github.com/NoManNayeem/google-docs-mcp-server/discussions
+
+## Tags
+
+#mcp #google-docs #llm #ai #claude #automation #document-management #api #nodejs #typescript #oauth #productivity #open-source #developer-tools #integration
+
+---
+
+Last Updated: 2024
+Project Status: Active Development
