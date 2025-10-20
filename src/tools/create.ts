@@ -19,6 +19,7 @@ export function registerCreateTools(server: any, docs: any) {
       }
     },
     async ({ title, initialContent }: { title: string; initialContent?: string }): Promise<ToolResult> => {
+      console.error('[create_document] start', { title, hasInitialContent: Boolean(initialContent && initialContent.length) });
       try {
         // Step 1: Create document
         const createResponse = await docs.documents.create({
@@ -48,6 +49,7 @@ export function registerCreateTools(server: any, docs: any) {
           title
         };
 
+        console.error('[create_document] success', { documentId });
         return {
           content: [{
             type: 'text',
@@ -56,6 +58,7 @@ export function registerCreateTools(server: any, docs: any) {
           structuredContent: output
         };
       } catch (error: any) {
+        console.error('[create_document] error', { message: error?.message });
         return {
           content: [{
             type: 'text',
@@ -84,6 +87,7 @@ export function registerCreateTools(server: any, docs: any) {
       }
     },
     async ({ title, heading, body }: { title: string; heading: string; body: string }): Promise<ToolResult> => {
+      console.error('[create_formatted_document] start', { title, headingLength: heading?.length, bodyLength: body?.length });
       try {
         // Create document
         const createResponse = await docs.documents.create({
@@ -144,6 +148,7 @@ export function registerCreateTools(server: any, docs: any) {
           documentUrl: `https://docs.google.com/document/d/${documentId}/edit`
         };
 
+        console.error('[create_formatted_document] success', { documentId });
         return {
           content: [{
             type: 'text',
@@ -152,6 +157,7 @@ export function registerCreateTools(server: any, docs: any) {
           structuredContent: output
         };
       } catch (error: any) {
+        console.error('[create_formatted_document] error', { message: error?.message });
         return {
           content: [{
             type: 'text',

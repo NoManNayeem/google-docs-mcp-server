@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -11,10 +13,10 @@
     <meta property="og:title" content="LLM2Docs - Unofficial MCP Bridge for Google Docs">
     <meta property="og:description" content="Unofficial MCP bridge between LLMs and Google Docs. Let large language models securely access, read, and interact with your documents.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nomanayeem.github.io/google-docs-mcp-server">
+    <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ site.baseurl }}/assets/favicon.ico">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/styles.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -584,6 +586,6 @@ graph TB
     </footer>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
+    <script src="{{ site.baseurl }}/script.js"></script>
 </body>
 </html>

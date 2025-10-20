@@ -1,12 +1,12 @@
-# Contributing to DocsForge MCP
+# Contributing to LLM2Docs (google-docs-mcp-server)
 
-Thank you for your interest in contributing to DocsForge MCP! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to LLM2Docs! This document provides guidelines and information for contributors.
 
 ## 🤝 How to Contribute
 
 ### Reporting Issues
 
-- **Bug Reports**: Use the [GitHub Issues](https://github.com/NoManNayeem/docsforge-mcp/issues) to report bugs
+- **Bug Reports**: Use the [GitHub Issues](https://github.com/NoManNayeem/google-docs-mcp-server/issues) to report bugs
 - **Feature Requests**: Submit feature requests with detailed descriptions
 - **Documentation**: Help improve our documentation
 
@@ -14,8 +14,8 @@ Thank you for your interest in contributing to DocsForge MCP! This document prov
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/NoManNayeem/docsforge-mcp.git
-   cd docsforge-mcp
+   git clone https://github.com/NoManNayeem/google-docs-mcp-server.git
+   cd google-docs-mcp-server
    ```
 
 2. **Install dependencies**
@@ -36,7 +36,7 @@ Thank you for your interest in contributing to DocsForge MCP! This document prov
 5. **Test your changes**
    ```bash
    npm run build
-   npm test  # when tests are added
+   npm test
    ```
 
 6. **Commit your changes**
@@ -81,7 +81,7 @@ docs(readme): update installation instructions
 ## 🛠️ Project Structure
 
 ```
-docsforge-mcp/
+google-docs-mcp-server/
 ├── src/
 │   ├── index.ts              # Main server entry point
 │   ├── auth.ts               # OAuth 2.0 authentication
@@ -121,7 +121,6 @@ docsforge-mcp/
 
 ### Automated Testing
 
-When tests are implemented:
 ```bash
 npm test              # Run all tests
 npm run test:watch    # Watch mode
@@ -187,7 +186,7 @@ We use the following labels:
 
 - **GitHub Discussions**: For questions and general discussion
 - **GitHub Issues**: For bug reports and feature requests
-- **Documentation**: Check the [docs website](https://nomanayeem.github.io/docsforge-mcp)
+- **Documentation**: Check the [docs website](https://nomanayeem.github.io/google-docs-mcp-server)
 
 ## 🎯 Roadmap
 
@@ -205,7 +204,7 @@ We use the following labels:
 
 ## 📄 License
 
-By contributing to DocsForge MCP, you agree that your contributions will be licensed under the MIT License.
+By contributing to LLM2Docs, you agree that your contributions will be licensed under the MIT License.
 
 ## 🙏 Recognition
 
@@ -226,4 +225,4 @@ Before submitting a PR:
 - [ ] Commit messages are clear
 - [ ] PR description is comprehensive
 
-Thank you for contributing to DocsForge MCP! 🚀
+Thank you for contributing to LLM2Docs! 🚀

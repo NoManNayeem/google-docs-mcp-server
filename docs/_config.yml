@@ -2,7 +2,7 @@
 title: LLM2Docs - Google Docs MCP Server
 description: A powerful Model Context Protocol server for comprehensive Google Docs automation and technical documentation
 author: NoManNayeem
-url: https://nomanayeem.github.io/google-docs-mcp-server
+url: https://nomanayeem.github.io
 baseurl: /google-docs-mcp-server
 
 # Build settings
@@ -15,7 +15,7 @@ navigation:
   - title: Features
     url: /google-docs-mcp-server/#features
   - title: Quick Start
-    url: /google-docs-mcp-server/#quick-start
+    url: /google-docs-mcp-server/#quickstart
   - title: Documentation
     url: /google-docs-mcp-server/#documentation
   - title: Examples

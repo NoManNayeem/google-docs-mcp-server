@@ -18,6 +18,7 @@ export function registerUpdateTools(server: any, docs: any) {
       }
     },
     async ({ documentId, text }: { documentId: string; text: string }): Promise<ToolResult> => {
+      console.error('[append_text] start', { documentId, textLength: text?.length });
       try {
         // Use endOfSegmentLocation to append without calculating indexes
         const requests = [{
@@ -34,6 +35,7 @@ export function registerUpdateTools(server: any, docs: any) {
           requestBody: { requests }
         });
 
+        console.error('[append_text] success');
         return {
           content: [{
             type: 'text',
@@ -45,6 +47,7 @@ export function registerUpdateTools(server: any, docs: any) {
           }
         };
       } catch (error: any) {
+        console.error('[append_text] error', { message: error?.message });
         return {
           content: [{
             type: 'text',
@@ -72,6 +75,7 @@ export function registerUpdateTools(server: any, docs: any) {
       }
     },
     async ({ documentId, text, index }: { documentId: string; text: string; index: number }): Promise<ToolResult> => {
+      console.error('[insert_text] start', { documentId, index, textLength: text?.length });
       try {
         const requests = [{
           insertText: {
@@ -85,6 +89,7 @@ export function registerUpdateTools(server: any, docs: any) {
           requestBody: { requests }
         });
 
+        console.error('[insert_text] success');
         return {
           content: [{
             type: 'text',
@@ -93,6 +98,7 @@ export function registerUpdateTools(server: any, docs: any) {
           structuredContent: { success: true }
         };
       } catch (error: any) {
+        console.error('[insert_text] error', { message: error?.message });
         return {
           content: [{
             type: 'text',
@@ -120,6 +126,7 @@ export function registerUpdateTools(server: any, docs: any) {
       }
     },
     async ({ documentId, startIndex, endIndex }: { documentId: string; startIndex: number; endIndex: number }): Promise<ToolResult> => {
+      console.error('[delete_text] start', { documentId, startIndex, endIndex });
       try {
         const requests = [{
           deleteContentRange: {
@@ -135,6 +142,7 @@ export function registerUpdateTools(server: any, docs: any) {
           requestBody: { requests }
         });
 
+        console.error('[delete_text] success');
         return {
           content: [{
             type: 'text',
@@ -143,6 +151,7 @@ export function registerUpdateTools(server: any, docs: any) {
           structuredContent: { success: true }
         };
       } catch (error: any) {
+        console.error('[delete_text] error', { message: error?.message });
         return {
           content: [{
             type: 'text',
@@ -171,6 +180,7 @@ export function registerUpdateTools(server: any, docs: any) {
       }
     },
     async ({ documentId, startIndex, endIndex, newText }: { documentId: string; startIndex: number; endIndex: number; newText: string }): Promise<ToolResult> => {
+      console.error('[replace_text] start', { documentId, startIndex, endIndex, newTextLength: newText?.length });
       try {
         const requests = [
           {
@@ -194,6 +204,7 @@ export function registerUpdateTools(server: any, docs: any) {
           requestBody: { requests }
         });
 
+        console.error('[replace_text] success');
         return {
           content: [{
             type: 'text',
@@ -202,6 +213,7 @@ export function registerUpdateTools(server: any, docs: any) {
           structuredContent: { success: true }
         };
       } catch (error: any) {
+        console.error('[replace_text] error', { message: error?.message });
         return {
           content: [{
             type: 'text',

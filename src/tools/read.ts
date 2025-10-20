@@ -22,6 +22,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
       }
     },
     async ({ documentId }: { documentId: string }): Promise<ToolResult> => {
+      console.error('[read_document] start', { documentId });
       try {
         // Validate document ID
         validateDocumentId(documentId);
@@ -48,6 +49,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
           documentId
         };
 
+        console.error('[read_document] success', { title: doc?.data?.title });
         return {
           content: [{
             type: 'text',
@@ -57,6 +59,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
         };
       } catch (error: any) {
         if (error instanceof ValidationError) {
+          console.error('[read_document] validation_error', { message: error?.message });
           return {
             content: [{
               type: 'text',
@@ -66,6 +69,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
           };
         }
         if (error.code === 404) {
+          console.error('[read_document] not_found');
           return {
             content: [{
               type: 'text',
@@ -74,6 +78,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
             isError: true
           };
         }
+        console.error('[read_document] error', { message: error?.message });
         return {
           content: [{
             type: 'text',
@@ -104,6 +109,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
       }
     },
     async ({ query, maxResults }: { query: string; maxResults?: number }): Promise<ToolResult> => {
+      console.error('[search_documents] start', { query, maxResults });
       try {
         // Handle empty or wildcard queries
         let searchQuery = "mimeType='application/vnd.google-apps.document' and trashed=false";
@@ -129,6 +135,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
           url: `https://docs.google.com/document/d/${file.id}/edit`
         }));
 
+        console.error('[search_documents] success', { count: documents.length });
         return {
           content: [{
             type: 'text',
@@ -138,6 +145,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
         };
       } catch (error: any) {
         if (error instanceof ValidationError) {
+          console.error('[search_documents] validation_error', { message: error?.message });
           return {
             content: [{
               type: 'text',
@@ -146,6 +154,7 @@ export function registerReadTools(server: any, docs: any, drive: any) {
             isError: true
           };
         }
+        console.error('[search_documents] error', { message: error?.message });
         return {
           content: [{
             type: 'text',

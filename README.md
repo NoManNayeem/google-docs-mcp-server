@@ -39,6 +39,8 @@ LLM2Docs is an unofficial Model Context Protocol (MCP) server for Google Docs. I
 - **Google Cloud Project** with APIs enabled
 - **Claude Desktop** for AI integration
 
+Note: Place your Google OAuth client credentials as `credentials.json` at the project root (same folder as `package.json`). The app will store tokens in `token.json` automatically after first login.
+
 ### Installation
 
 1. **Clone the repository**
@@ -77,6 +79,11 @@ LLM2Docs is an unofficial Model Context Protocol (MCP) server for Google Docs. I
      }
    }
    ```
+
+7. **Deploy docs to GitHub Pages**
+   - Ensure `docs/_config.yml` has: `url: https://nomanayeem.github.io` and `baseurl: /google-docs-mcp-server`
+   - Make sure `docs/index.html` uses `{{ site.baseurl }}` for local assets
+   - Set Pages source to `/docs` in repository settings
 
 6. **Start using with Claude Desktop**
    - Restart Claude Desktop
