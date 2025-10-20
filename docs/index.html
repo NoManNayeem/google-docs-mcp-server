@@ -16,7 +16,7 @@
     <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ site.baseurl }}/assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ '/assets/favicon.ico' | relative_url }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/styles.css">
+    <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
 </head>
 <body>
     <!-- Navigation -->
@@ -586,6 +586,6 @@ graph TB
     </footer>
 
     <!-- Scripts -->
-    <script src="{{ site.baseurl }}/script.js"></script>
+    <script src="{{ '/script.js' | relative_url }}"></script>
 </body>
 </html>
