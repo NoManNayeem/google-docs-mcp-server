@@ -24,7 +24,7 @@ class ThemeManager {
     // Reinitialize Mermaid with new theme
     if (typeof mermaid !== 'undefined') {
       mermaid.initialize({
-        startOnLoad: true,
+        startOnLoad: false,
         theme: theme === 'dark' ? 'dark' : 'default',
         themeVariables: {
           primaryColor: '#3b82f6',
@@ -47,7 +47,7 @@ class ThemeManager {
         div.innerHTML = code;
         div.removeAttribute('data-processed');
       });
-      mermaid.run();
+      mermaid.run().catch((e) => console.error('Mermaid run error (theme apply):', e));
     }
   }
 
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     const theme = savedTheme !== null ? savedTheme : 'dark';
     mermaid.initialize({
-      startOnLoad: true,
+      startOnLoad: false,
       theme: theme === 'dark' ? 'dark' : 'default',
       themeVariables: {
         primaryColor: '#3b82f6',
@@ -359,6 +359,16 @@ document.addEventListener('DOMContentLoaded', () => {
         diagramMarginX: 50,
         diagramMarginY: 10
       }
+    });
+    // Ensure diagrams render after DOM ready and init
+    requestAnimationFrame(() => {
+      const mermaidDivs = document.querySelectorAll('.mermaid');
+      mermaidDivs.forEach((div) => {
+        const code = div.textContent;
+        div.innerHTML = code;
+        div.removeAttribute('data-processed');
+      });
+      mermaid.run().catch((e) => console.error('Mermaid run error (initial):', e));
     });
   }
 
