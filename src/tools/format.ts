@@ -793,41 +793,35 @@ export function registerFormatTools(server: any, docs: any) {
     async ({ documentId, index, items, bulletStyle }: { documentId: string; index: number; items: string[]; bulletStyle?: string }): Promise<ToolResult> => {
       try {
         const requests = [];
-        
+
+        // Calculate total length of all items to determine range
+        let currentIndex = index;
+
         // Insert each list item
         for (let i = 0; i < items.length; i++) {
-          const itemText = items[i];
-          const insertIndex = index + (i * (itemText.length + 1));
-          
           requests.push({
             insertText: {
-              location: { index: insertIndex },
-              text: itemText + '\n'
+              location: { index: currentIndex },
+              text: items[i] + '\n'
             }
           });
+          currentIndex += items[i].length + 1;
         }
 
-        // Apply bullet list formatting to all items
-        for (let i = 0; i < items.length; i++) {
-          const startIndex = index + (i * (items[i].length + 1));
-          const endIndex = startIndex + items[i].length;
-          
-          requests.push({
-            updateParagraphStyle: {
-              range: {
-                startIndex: startIndex,
-                endIndex: endIndex
-              },
-              paragraphStyle: {
-                bullet: {
-                  listId: 'bulleted-list',
-                  nestingLevel: 0
-                }
-              },
-              fields: 'bullet'
-            }
-          });
-        }
+        // Calculate the total range for all list items
+        const totalLength = items.reduce((sum, item) => sum + item.length + 1, 0);
+        const endIndex = index + totalLength;
+
+        // Apply bullet list formatting using createParagraphBullets with bulletPreset
+        requests.push({
+          createParagraphBullets: {
+            range: {
+              startIndex: index,
+              endIndex: endIndex
+            },
+            bulletPreset: bulletStyle || 'BULLET_DISC_CIRCLE_SQUARE'
+          }
+        });
 
         await docs.documents.batchUpdate({
           documentId: documentId,
@@ -837,7 +831,7 @@ export function registerFormatTools(server: any, docs: any) {
         return {
           content: [{
             type: 'text',
-            text: `Created bulleted list with ${items.length} items`
+            text: `Created bulleted list with ${items.length} items using ${bulletStyle || 'default'} style`
           }],
           structuredContent: {
             success: true,
@@ -880,41 +874,47 @@ export function registerFormatTools(server: any, docs: any) {
     async ({ documentId, index, items, numberingFormat }: { documentId: string; index: number; items: string[]; numberingFormat?: string }): Promise<ToolResult> => {
       try {
         const requests = [];
-        
+
+        // Calculate total length of all items to determine range
+        let currentIndex = index;
+
         // Insert each list item
         for (let i = 0; i < items.length; i++) {
-          const itemText = items[i];
-          const insertIndex = index + (i * (itemText.length + 1));
-          
           requests.push({
             insertText: {
-              location: { index: insertIndex },
-              text: itemText + '\n'
+              location: { index: currentIndex },
+              text: items[i] + '\n'
             }
           });
+          currentIndex += items[i].length + 1;
         }
 
-        // Apply numbered list formatting to all items
-        for (let i = 0; i < items.length; i++) {
-          const startIndex = index + (i * (items[i].length + 1));
-          const endIndex = startIndex + items[i].length;
-          
-          requests.push({
-            updateParagraphStyle: {
-              range: {
-                startIndex: startIndex,
-                endIndex: endIndex
-              },
-              paragraphStyle: {
-                bullet: {
-                  listId: 'numbered-list',
-                  nestingLevel: 0
-                }
-              },
-              fields: 'bullet'
-            }
-          });
-        }
+        // Calculate the total range for all list items
+        const totalLength = items.reduce((sum, item) => sum + item.length + 1, 0);
+        const endIndex = index + totalLength;
+
+        // Map numberingFormat to bulletPreset for numbered lists
+        // Google Docs API uses bulletPreset with formats like NUMBERED_DECIMAL_ALPHA_ROMAN
+        const presetMap: { [key: string]: string } = {
+          'DECIMAL_DECIMAL': 'NUMBERED_DECIMAL_ALPHA_ROMAN',
+          'UPPER_ROMAN': 'NUMBERED_UPPERROMAN_UPPERALPHA_DECIMAL',
+          'LOWER_ROMAN': 'NUMBERED_DECIMAL_ALPHA_ROMAN', // Use default for lower roman
+          'UPPER_ALPHA': 'NUMBERED_UPPERALPHA_UPPERROMAN_DECIMAL',
+          'LOWER_ALPHA': 'NUMBERED_DECIMAL_ALPHA_ROMAN'
+        };
+
+        const bulletPreset = presetMap[numberingFormat || 'DECIMAL_DECIMAL'] || 'NUMBERED_DECIMAL_ALPHA_ROMAN';
+
+        // Apply numbered list formatting using createParagraphBullets with bulletPreset
+        requests.push({
+          createParagraphBullets: {
+            range: {
+              startIndex: index,
+              endIndex: endIndex
+            },
+            bulletPreset: bulletPreset
+          }
+        });
 
         await docs.documents.batchUpdate({
           documentId: documentId,
@@ -924,7 +924,7 @@ export function registerFormatTools(server: any, docs: any) {
         return {
           content: [{
             type: 'text',
-            text: `Created numbered list with ${items.length} items`
+            text: `Created numbered list with ${items.length} items using ${numberingFormat || 'default'} format`
           }],
           structuredContent: {
             success: true,

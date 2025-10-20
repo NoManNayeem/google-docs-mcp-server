@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ToolResult } from '../types.js';
+import { validateDocumentId, validateIndex, validateText, ValidationError } from '../utils/validation.js';
 
 export function registerStructureTools(server: any, docs: any) {
   // Insert table of contents tool
@@ -296,21 +297,76 @@ export function registerStructureTools(server: any, docs: any) {
       pageNumber?: boolean;
     }): Promise<ToolResult> => {
       try {
-        const requests = [{
+        // Validate inputs
+        validateDocumentId(documentId);
+        validateText(headerText, 1000);
+
+        // Step 1: Create the header
+        const createHeaderRequests = [{
           createHeader: {
             type: 'DEFAULT'
           }
         }];
 
+        const createResponse = await docs.documents.batchUpdate({
+          documentId: documentId,
+          requestBody: { requests: createHeaderRequests }
+        });
+
+        // Step 2: Get the header ID from the response
+        const headerId = createResponse.data.replies?.[0]?.createHeader?.headerId;
+
+        if (!headerId) {
+          return {
+            content: [{
+              type: 'text',
+              text: 'Error: Failed to create header'
+            }],
+            structuredContent: {
+              success: false,
+              message: 'Failed to get header ID from response'
+            },
+            isError: true
+          };
+        }
+
+        // Step 3: Insert text into the header
+        const insertTextRequests = [{
+          insertText: {
+            location: {
+              segmentId: headerId,
+              index: 0
+            },
+            text: headerText
+          }
+        }];
+
+        // Step 4: Add page number if requested
+        if (pageNumber) {
+          insertTextRequests.push({
+            insertText: {
+              location: {
+                segmentId: headerId,
+                index: headerText.length
+              },
+              text: '\t'
+            }
+          } as any);
+
+          // Note: Page numbers in Google Docs require special handling
+          // For now, we add a tab and note that actual page numbering
+          // requires the insertPageBreak with pageNumber field
+        }
+
         await docs.documents.batchUpdate({
           documentId: documentId,
-          requestBody: { requests }
+          requestBody: { requests: insertTextRequests }
         });
 
         return {
           content: [{
             type: 'text',
-            text: `Inserted header: "${headerText}"${pageNumber ? ' with page numbers' : ''}`
+            text: `Inserted header: "${headerText}"${pageNumber ? ' (page number placeholder added)' : ''}`
           }],
           structuredContent: {
             success: true,
@@ -318,6 +374,19 @@ export function registerStructureTools(server: any, docs: any) {
           }
         };
       } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
+            }],
+            structuredContent: {
+              success: false,
+              message: `Validation error: ${error.message}`
+            },
+            isError: true
+          };
+        }
         return {
           content: [{
             type: 'text',
@@ -355,21 +424,76 @@ export function registerStructureTools(server: any, docs: any) {
       pageNumber?: boolean;
     }): Promise<ToolResult> => {
       try {
-        const requests = [{
+        // Validate inputs
+        validateDocumentId(documentId);
+        validateText(footerText, 1000);
+
+        // Step 1: Create the footer
+        const createFooterRequests = [{
           createFooter: {
             type: 'DEFAULT'
           }
         }];
 
+        const createResponse = await docs.documents.batchUpdate({
+          documentId: documentId,
+          requestBody: { requests: createFooterRequests }
+        });
+
+        // Step 2: Get the footer ID from the response
+        const footerId = createResponse.data.replies?.[0]?.createFooter?.footerId;
+
+        if (!footerId) {
+          return {
+            content: [{
+              type: 'text',
+              text: 'Error: Failed to create footer'
+            }],
+            structuredContent: {
+              success: false,
+              message: 'Failed to get footer ID from response'
+            },
+            isError: true
+          };
+        }
+
+        // Step 3: Insert text into the footer
+        const insertTextRequests = [{
+          insertText: {
+            location: {
+              segmentId: footerId,
+              index: 0
+            },
+            text: footerText
+          }
+        }];
+
+        // Step 4: Add page number if requested
+        if (pageNumber) {
+          insertTextRequests.push({
+            insertText: {
+              location: {
+                segmentId: footerId,
+                index: footerText.length
+              },
+              text: '\t'
+            }
+          } as any);
+
+          // Note: Page numbers in Google Docs require special handling
+          // For now, we add a tab and note that actual page numbering
+          // requires the insertPageBreak with pageNumber field
+        }
+
         await docs.documents.batchUpdate({
           documentId: documentId,
-          requestBody: { requests }
+          requestBody: { requests: insertTextRequests }
         });
 
         return {
           content: [{
             type: 'text',
-            text: `Inserted footer: "${footerText}"${pageNumber ? ' with page numbers' : ''}`
+            text: `Inserted footer: "${footerText}"${pageNumber ? ' (page number placeholder added)' : ''}`
           }],
           structuredContent: {
             success: true,
@@ -377,6 +501,19 @@ export function registerStructureTools(server: any, docs: any) {
           }
         };
       } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
+            }],
+            structuredContent: {
+              success: false,
+              message: `Validation error: ${error.message}`
+            },
+            isError: true
+          };
+        }
         return {
           content: [{
             type: 'text',

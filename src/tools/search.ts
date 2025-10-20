@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ToolResult } from '../types.js';
+import { validateDocumentId, validateText, ValidationError } from '../utils/validation.js';
 
 export function registerSearchTools(server: any, docs: any) {
   // Find and replace tool
@@ -29,92 +30,143 @@ export function registerSearchTools(server: any, docs: any) {
       replaceAll?: boolean;
     }): Promise<ToolResult> => {
       try {
-        // First, get the document content to find matches
-        const doc = await docs.documents.get({ documentId });
-        const content = doc.data.body?.content || [];
-        
-        let documentText = '';
-        for (const element of content) {
-          if (element.paragraph) {
-            for (const elem of element.paragraph.elements) {
-              if (elem.textRun) {
-                documentText += elem.textRun.content || '';
-              }
+        // Validate inputs
+        validateDocumentId(documentId);
+        validateText(findText, 10000);
+        validateText(replaceText, 10000);
+
+        if (replaceAll) {
+          // Use Google Docs API's built-in replaceAllText for replacing all occurrences
+          // This is more reliable and efficient than manual index manipulation
+          const requests = [{
+            replaceAllText: {
+              containsText: {
+                text: findText,
+                matchCase: matchCase || false
+              },
+              replaceText: replaceText
             }
+          }];
+
+          const response = await docs.documents.batchUpdate({
+            documentId: documentId,
+            requestBody: { requests }
+          });
+
+          // The API returns the number of replacements made
+          const replacementsCount = response.data.replies?.[0]?.replaceAllText?.occurrencesChanged || 0;
+
+          if (replacementsCount === 0) {
+            return {
+              content: [{
+                type: 'text',
+                text: `No matches found for "${findText}"`
+              }],
+              structuredContent: {
+                success: false,
+                replacementsCount: 0,
+                message: 'No matches found'
+              }
+            };
           }
-        }
 
-        // Find matches
-        const searchText = matchCase ? findText : findText.toLowerCase();
-        const docText = matchCase ? documentText : documentText.toLowerCase();
-        
-        const matches = [];
-        let index = 0;
-        while ((index = docText.indexOf(searchText, index)) !== -1) {
-          matches.push(index);
-          index += searchText.length;
-        }
-
-        if (matches.length === 0) {
           return {
             content: [{
               type: 'text',
-              text: `No matches found for "${findText}"`
+              text: `Replaced ${replacementsCount} occurrence${replacementsCount !== 1 ? 's' : ''} of "${findText}" with "${replaceText}"`
+            }],
+            structuredContent: {
+              success: true,
+              replacementsCount: replacementsCount,
+              message: `Replaced ${replacementsCount} occurrence${replacementsCount !== 1 ? 's' : ''}`
+            }
+          };
+        } else {
+          // For single replacement, we need to find the first match and replace it
+          const doc = await docs.documents.get({ documentId });
+          const content = doc.data.body?.content || [];
+
+          let documentText = '';
+          for (const element of content) {
+            if (element.paragraph) {
+              for (const elem of element.paragraph.elements) {
+                if (elem.textRun) {
+                  documentText += elem.textRun.content || '';
+                }
+              }
+            }
+          }
+
+          // Find first match
+          const searchText = matchCase ? findText : findText.toLowerCase();
+          const docText = matchCase ? documentText : documentText.toLowerCase();
+          const matchIndex = docText.indexOf(searchText);
+
+          if (matchIndex === -1) {
+            return {
+              content: [{
+                type: 'text',
+                text: `No matches found for "${findText}"`
+              }],
+              structuredContent: {
+                success: false,
+                replacementsCount: 0,
+                message: 'No matches found'
+              }
+            };
+          }
+
+          // Replace first occurrence using delete + insert
+          // Add 1 to account for document start index
+          const requests = [
+            {
+              deleteContentRange: {
+                range: {
+                  startIndex: matchIndex + 1,
+                  endIndex: matchIndex + 1 + findText.length
+                }
+              }
+            },
+            {
+              insertText: {
+                location: { index: matchIndex + 1 },
+                text: replaceText
+              }
+            }
+          ];
+
+          await docs.documents.batchUpdate({
+            documentId: documentId,
+            requestBody: { requests }
+          });
+
+          return {
+            content: [{
+              type: 'text',
+              text: `Replaced 1 occurrence of "${findText}" with "${replaceText}"`
+            }],
+            structuredContent: {
+              success: true,
+              replacementsCount: 1,
+              message: 'Replaced 1 occurrence'
+            }
+          };
+        }
+      } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
             }],
             structuredContent: {
               success: false,
               replacementsCount: 0,
-              message: 'No matches found'
-            }
+              message: `Validation error: ${error.message}`
+            },
+            isError: true
           };
         }
-
-        // Replace matches
-        const requests = [];
-        let replacementsCount = 0;
-        
-        // Sort matches in reverse order to avoid index shifting
-        const sortedMatches = matches.sort((a, b) => b - a);
-        
-        for (const matchIndex of sortedMatches) {
-          if (!replaceAll && replacementsCount >= 1) break;
-          
-          requests.push({
-            deleteContentRange: {
-              range: {
-                startIndex: matchIndex,
-                endIndex: matchIndex + findText.length
-              }
-            }
-          });
-          
-          requests.push({
-            insertText: {
-              location: { index: matchIndex },
-              text: replaceText
-            }
-          });
-          
-          replacementsCount++;
-        }
-
-        await docs.documents.batchUpdate({
-          documentId: documentId,
-          requestBody: { requests }
-        });
-
-        return {
-          content: [{
-            type: 'text',
-            text: `Replaced ${replacementsCount} occurrence${replacementsCount !== 1 ? 's' : ''} of "${findText}" with "${replaceText}"`
-          }],
-          structuredContent: {
-            success: true,
-            replacementsCount: replacementsCount,
-            message: `Replaced ${replacementsCount} occurrence${replacementsCount !== 1 ? 's' : ''}`
-          }
-        };
-      } catch (error: any) {
         return {
           content: [{
             type: 'text',
@@ -161,6 +213,10 @@ export function registerSearchTools(server: any, docs: any) {
       maxResults?: number;
     }): Promise<ToolResult> => {
       try {
+        // Validate inputs
+        validateDocumentId(documentId);
+        validateText(searchText, 10000);
+
         // Get the document content
         const doc = await docs.documents.get({ documentId });
         const content = doc.data.body?.content || [];
@@ -209,6 +265,21 @@ export function registerSearchTools(server: any, docs: any) {
           }
         };
       } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
+            }],
+            structuredContent: {
+              success: false,
+              matches: [],
+              totalMatches: 0,
+              message: `Validation error: ${error.message}`
+            },
+            isError: true
+          };
+        }
         return {
           content: [{
             type: 'text',
@@ -246,6 +317,9 @@ export function registerSearchTools(server: any, docs: any) {
     },
     async ({ documentId }: { documentId: string }): Promise<ToolResult> => {
       try {
+        // Validate inputs
+        validateDocumentId(documentId);
+
         // Get the document content
         const doc = await docs.documents.get({ documentId });
         const content = doc.data.body?.content || [];
@@ -287,6 +361,22 @@ export function registerSearchTools(server: any, docs: any) {
           }
         };
       } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
+            }],
+            structuredContent: {
+              success: false,
+              wordCount: 0,
+              characterCount: 0,
+              paragraphCount: 0,
+              message: `Validation error: ${error.message}`
+            },
+            isError: true
+          };
+        }
         return {
           content: [{
             type: 'text',

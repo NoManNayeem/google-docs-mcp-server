@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ToolResult } from '../types.js';
+import { validateDocumentId, validateIndex, ValidationError } from '../utils/validation.js';
 
 export function registerMediaTools(server: any, docs: any) {
   // Insert image from URL tool
@@ -98,9 +99,54 @@ export function registerMediaTools(server: any, docs: any) {
       height: number;
     }): Promise<ToolResult> => {
       try {
+        // Validate inputs
+        validateDocumentId(documentId);
+        validateIndex(imageStartIndex, 'imageStartIndex');
+        validateIndex(imageEndIndex, 'imageEndIndex');
+
+        // First, get the document to find the actual image object ID
+        const doc = await docs.documents.get({ documentId });
+        const content = doc.data.body?.content || [];
+
+        // Find the inline image object ID within the specified range
+        let imageObjectId: string | null = null;
+
+        for (const element of content) {
+          if (element.paragraph) {
+            for (const paragraphElement of element.paragraph.elements) {
+              const startIdx = paragraphElement.startIndex || 0;
+              const endIdx = paragraphElement.endIndex || 0;
+
+              // Check if this element is within our target range and contains an inline image
+              if (startIdx >= imageStartIndex && endIdx <= imageEndIndex) {
+                if (paragraphElement.inlineObjectElement) {
+                  imageObjectId = paragraphElement.inlineObjectElement.inlineObjectId;
+                  break;
+                }
+              }
+            }
+            if (imageObjectId) break;
+          }
+        }
+
+        if (!imageObjectId) {
+          return {
+            content: [{
+              type: 'text',
+              text: `No image found at the specified range (${imageStartIndex}-${imageEndIndex})`
+            }],
+            structuredContent: {
+              success: false,
+              message: 'No image found at specified range'
+            },
+            isError: true
+          };
+        }
+
+        // Now update the image with the actual object ID
         const requests = [{
           updateInlineImageProperties: {
-            objectId: 'image', // This would need to be the actual object ID
+            objectId: imageObjectId,
             inlineImageProperties: {
               embeddedObject: {
                 size: {
@@ -129,6 +175,19 @@ export function registerMediaTools(server: any, docs: any) {
           }
         };
       } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
+            }],
+            structuredContent: {
+              success: false,
+              message: `Validation error: ${error.message}`
+            },
+            isError: true
+          };
+        }
         return {
           content: [{
             type: 'text',

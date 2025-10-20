@@ -1,9 +1,8 @@
 import { z } from 'zod';
 import { ToolResult, DocumentContent, SearchResult } from '../types.js';
+import { validateDocumentId, sanitizeSearchQuery, ValidationError } from '../utils/validation.js';
 
 export function registerReadTools(server: any, docs: any, drive: any) {
-  console.error('🔧 Registering read tools with drive object:', !!drive);
-  
   // Store drive reference for use in tool functions
   const driveClient = drive;
   
@@ -24,6 +23,9 @@ export function registerReadTools(server: any, docs: any, drive: any) {
     },
     async ({ documentId }: { documentId: string }): Promise<ToolResult> => {
       try {
+        // Validate document ID
+        validateDocumentId(documentId);
+
         const doc = await docs.documents.get({ documentId });
 
         // Extract text from document structure
@@ -54,6 +56,15 @@ export function registerReadTools(server: any, docs: any, drive: any) {
           structuredContent: output
         };
       } catch (error: any) {
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
+            }],
+            isError: true
+          };
+        }
         if (error.code === 404) {
           return {
             content: [{
@@ -94,16 +105,14 @@ export function registerReadTools(server: any, docs: any, drive: any) {
     },
     async ({ query, maxResults }: { query: string; maxResults?: number }): Promise<ToolResult> => {
       try {
-        console.error('🔍 Search function called, drive object:', !!driveClient);
-        
         // Handle empty or wildcard queries
         let searchQuery = "mimeType='application/vnd.google-apps.document' and trashed=false";
-        
-        if (query && query.trim() && query !== '*') {
-          searchQuery += ` and name contains '${query}'`;
-        }
 
-        console.error('Searching with query:', searchQuery);
+        if (query && query.trim() && query !== '*') {
+          // Sanitize the search query to prevent injection attacks
+          const sanitizedQuery = sanitizeSearchQuery(query);
+          searchQuery += ` and name contains '${sanitizedQuery}'`;
+        }
 
         const response = await driveClient.files.list({
           q: searchQuery,
@@ -111,15 +120,8 @@ export function registerReadTools(server: any, docs: any, drive: any) {
           fields: 'files(id, name)'
         });
 
-        console.error('Drive API response structure:', {
-          hasData: !!response.data,
-          hasFiles: !!response.data?.files,
-          filesLength: response.data?.files?.length || 0
-        });
-
         // Safely access files array
         const files = (response.data && response.data.files) ? response.data.files : [];
-        console.error('Files found:', files.length);
 
         const documents: SearchResult[] = files.map((file: any) => ({
           id: file.id,
@@ -135,7 +137,15 @@ export function registerReadTools(server: any, docs: any, drive: any) {
           structuredContent: { documents }
         };
       } catch (error: any) {
-        console.error('Search error details:', error);
+        if (error instanceof ValidationError) {
+          return {
+            content: [{
+              type: 'text',
+              text: `Validation error: ${error.message}`
+            }],
+            isError: true
+          };
+        }
         return {
           content: [{
             type: 'text',

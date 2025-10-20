@@ -120,8 +120,8 @@ export function registerCreateTools(server: any, docs: any) {
               text: body + '\n'
             }
           },
-          // Make first word of body bold
-          {
+          // Make first word of body bold (only if body has content)
+          ...(body.trim() && body.includes(' ') ? [{
             updateTextStyle: {
               range: {
                 startIndex: heading.length + 2,
@@ -130,7 +130,7 @@ export function registerCreateTools(server: any, docs: any) {
               textStyle: { bold: true },
               fields: 'bold'
             }
-          }
+          }] : [])
         ];
 
         // Execute all updates atomically
